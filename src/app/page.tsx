@@ -90,8 +90,8 @@ function ContactSection() {
   };
 
   return (
-    <section id="contact-form" style={{ padding: "9rem 4rem", background: "#121210", color: "#E8E8E2" }} className="section-pad">
-      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+    <section id="contact-form" style={{ background: "#121210", color: "#E8E8E2" }} className="section-pad">
+      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ marginBottom: "4rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.32 }}>06 / Collaboration</span>
           <h2 className="font-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", marginTop: "1rem" }}>Initialize a <em>Partnership</em></h2>
@@ -167,19 +167,19 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section id="testimonials" style={{ padding: "9rem 4rem", background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+    <section id="testimonials" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>05 / Testimonials</span>
           <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
           <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
         </div>
 
-        <div className="testimonial-grid" style={{ display: "grid", gap: "4rem" }}>
+        <div className="testimonial-grid" style={{ display: "grid", gap: "3rem" }}>
           {testimonials.map((t, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`}>
+            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "var(--ink)", opacity: 0.4 }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "var(--ink)", opacity: 0.4, flexShrink: 0 }}>
                    {t.initial}
                 </div>
                 <div>

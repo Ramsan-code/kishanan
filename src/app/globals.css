@@ -396,6 +396,8 @@ nav.site-nav.scrolled {
   .nav-desktop-links { display: none !important; }
   .nav-mobile-hamburger { display: block !important; }
   .site-nav-btn { display: none !important; }
+  .testimonial-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+  .testimonial-grid > div:last-child { border-bottom: none !important; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr !important; }
