@@ -54,27 +54,9 @@ function useScrollTrigger(ref: React.RefObject<HTMLElement | null>, callback: ()
 }
 
 function StatItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useScrollTrigger(ref, () => {
-    let start = 0;
-    const end = value;
-    const duration = 1500;
-    const timer = setInterval(() => {
-      start += Math.ceil(end / 40);
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(start);
-      }
-    }, duration / 40);
-  });
-
   return (
-    <div ref={ref}>
-      <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{count}{suffix}</div>
+    <div>
+      <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{value}{suffix}</div>
       <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginTop: "0.4rem" }}>{label}</div>
     </div>
   );
@@ -170,7 +152,7 @@ function TestimonialsSection() {
     <section id="testimonials" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>05 / Testimonials</span>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>06 / Testimonials</span>
           <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
           <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
         </div>
@@ -578,6 +560,90 @@ function EvolutionSection() {
   );
 }
 
+/* ─── SUNDAWN EVENTZ ──────────────────────────────────────────────────── */
+function SunDawnSection() {
+  const achievements = [
+    { num: "50+", label: "Events Produced", desc: "From intimate cultural gatherings to large-scale gala productions across South Asia." },
+    { num: "10K+", label: "Guests Hosted", desc: "Curating immersive, high-end experiences for discerning audiences and global brands." },
+    { num: "3", label: "States Covered", desc: "Operating across Tamil Nadu, Kerala, and Karnataka with a growing national footprint." },
+    { num: "100%", label: "Client Retention", desc: "Every client returns. A testament to execution quality and creative precision." },
+  ];
+
+  const services = [
+    { icon: "✦", title: "Gala & Award Nights", desc: "Black-tie events engineered for prestige — every detail deliberate, every moment cinematic." },
+    { icon: "◈", title: "Cultural Festivals", desc: "Celebrating South Asian heritage through large-scale, immersive public experiences." },
+    { icon: "◉", title: "Brand Activations", desc: "Transforming brand narratives into physical, sensory experiences that audiences remember." },
+    { icon: "⬡", title: "Corporate Summits", desc: "High-stakes corporate events with precision logistics and premium production value." },
+  ];
+
+  return (
+    <section id="sundawn" style={{ background: "#0D0D0B", color: "#E8E8E2" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
+
+        {/* Header */}
+        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "#E8E8E2", opacity: 0.32, whiteSpace: "nowrap" }}>05 / SunDawn Eventz</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "rgba(232,232,226,0.08)" }} />
+          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.2, color: "#E8E8E2" }}>The Venture</span>
+        </div>
+
+        {/* Title + Intro */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "end", marginBottom: "5rem" }} className="sundawn-intro-grid reveal">
+          <div>
+            <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 6rem)", lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+              SunDawn<br /><em>Eventz</em>
+            </h2>
+          </div>
+          <div>
+            <p className="font-serif" style={{ fontSize: "1.35rem", lineHeight: 1.65, opacity: 0.55, fontStyle: "italic", marginBottom: "1.5rem" }}>
+              &ldquo;Where culture meets curation — engineering luxury events that leave a mark long after the lights go down.&rdquo;
+            </p>
+            <p className="font-sans" style={{ fontSize: "0.9rem", lineHeight: 1.85, opacity: 0.5 }}>
+              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across South India.
+            </p>
+          </div>
+        </div>
+
+        {/* Achievement Stats */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0", borderTop: "1px solid rgba(232,232,226,0.08)", marginBottom: "5rem" }} className="sundawn-stats-grid reveal reveal-delay-1">
+          {achievements.map((a, i) => (
+            <div key={i} style={{ padding: "2.5rem 2rem", borderRight: i < 3 ? "1px solid rgba(232,232,226,0.08)" : "none" }}>
+              <div className="font-serif" style={{ fontSize: "clamp(2rem, 3vw, 3.5rem)", fontWeight: 600, lineHeight: 1, marginBottom: "0.4rem" }}>{a.num}</div>
+              <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", opacity: 0.35, marginBottom: "0.9rem" }}>{a.label}</div>
+              <p className="font-sans" style={{ fontSize: "0.8rem", lineHeight: 1.7, opacity: 0.45 }}>{a.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Services Grid */}
+        <div className="reveal reveal-delay-2" style={{ marginBottom: "4rem" }}>
+          <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", opacity: 0.3, marginBottom: "3rem" }}>What We Produce</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0" }} className="sundawn-services-grid">
+            {services.map((s, i) => (
+              <div key={i} style={{
+                padding: "2.5rem",
+                borderTop: "1px solid rgba(232,232,226,0.08)",
+                borderRight: i % 2 === 0 ? "1px solid rgba(232,232,226,0.08)" : "none",
+              }}>
+                <div style={{ fontSize: "1.4rem", marginBottom: "1rem", opacity: 0.4 }}>{s.icon}</div>
+                <h4 className="font-serif" style={{ fontSize: "1.5rem", marginBottom: "0.75rem", letterSpacing: "-0.01em" }}>{s.title}</h4>
+                <p className="font-sans" style={{ fontSize: "0.85rem", lineHeight: 1.75, opacity: 0.5 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="reveal reveal-delay-3" style={{ borderTop: "1px solid rgba(232,232,226,0.08)", paddingTop: "3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem" }}>
+          <p className="font-serif" style={{ fontSize: "1.35rem", opacity: 0.55, fontStyle: "italic" }}>Ready to create something extraordinary?</p>
+          <a href="#contact-form" className="btn-primary" id="sundawn-cta-btn" style={{ background: "#E8E8E2", color: "#0D0D0B", borderColor: "#E8E8E2" }}>Plan Your Event</a>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 /* ─── FOOTER ──────────────────────────────────────────────────────────── */
 function Footer() {
   const [email, setEmail] = useState("");
@@ -591,14 +657,6 @@ function Footer() {
   return (
     <footer id="contact" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", paddingTop: "7rem" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
-        <div className="reveal" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "5rem 0", marginBottom: "6rem", borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
-          <span className="font-script" style={{ fontSize: "2rem", opacity: 0.26, marginBottom: "1.5rem" }}>Let&apos;s create</span>
-          <h2 className="font-serif" style={{ fontSize: "clamp(3.5rem, 7vw, 8rem)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "2.5rem" }}>
-            Something<br /><em>Lasting</em>
-          </h2>
-          <a href="mailto:kishanan@newborncinema.com" className="btn-primary" id="footer-cta-btn">Begin Collaboration</a>
-        </div>
-
         <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3rem" }}>
           <div>
             <h3 className="font-serif" style={{ fontSize: "1.4rem", marginBottom: "1.25rem" }}>Kishanan S.</h3>
@@ -688,6 +746,7 @@ export default function Home() {
         <CapabilitiesSection />
         <ImpactSection />
         <EvolutionSection />
+        <SunDawnSection />
         <TestimonialsSection />
         <ContactSection />
         <Footer />

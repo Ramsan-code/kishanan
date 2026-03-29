@@ -398,10 +398,16 @@ nav.site-nav.scrolled {
   .site-nav-btn { display: none !important; }
   .testimonial-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
   .testimonial-grid > div:last-child { border-bottom: none !important; }
+  .sundawn-intro-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+  .sundawn-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .sundawn-stats-grid > div { border-right: none !important; border-bottom: 1px solid rgba(232,232,226,0.08); }
+  .sundawn-services-grid { grid-template-columns: 1fr !important; }
+  .sundawn-services-grid > div { border-right: none !important; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr !important; }
   .stat-grid-mobile { grid-template-columns: 1fr !important; }
+  .sundawn-stats-grid { grid-template-columns: 1fr !important; }
 }
 
 /* Hide Next.js error overlay */
