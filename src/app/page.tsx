@@ -279,7 +279,6 @@ function Navbar() {
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <ThemeToggle />
             <div style={{ width: "1px", height: "20px", background: "var(--ink)", opacity: 0.1, margin: "0 0.25rem" }} className="hidden md:block site-nav-divider" />
-            <a href="mailto:kishanan@newborncinema.com" className="btn-ghost hidden md:inline-flex site-nav-btn" id="nav-collaborate-btn">Collaborate</a>
             <button className="md:hidden nav-mobile-hamburger" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", padding: "0.5rem" }} aria-label="Toggle menu">
               <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
                 {[0, 1, 2].map((n) => (
