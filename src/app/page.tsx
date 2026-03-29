@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, RefObject } from "react";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
 function useReveal() {
@@ -30,18 +30,133 @@ function useScrollProgress() {
 
 function useCustomCursor() {
   useEffect(() => {
-    const dot  = document.getElementById("cursor-dot");
+    const dot = document.getElementById("cursor-dot");
     const ring = document.getElementById("cursor-ring");
     if (!dot || !ring) return;
     const onMove = (e: MouseEvent) => {
-      dot.style.left  = `${e.clientX}px`;
-      dot.style.top   = `${e.clientY}px`;
+      dot.style.left = `${e.clientX}px`;
+      dot.style.top = `${e.clientY}px`;
       ring.style.left = `${e.clientX}px`;
-      ring.style.top  = `${e.clientY}px`;
+      ring.style.top = `${e.clientY}px`;
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
+}
+
+function useScrollTrigger(ref: React.RefObject<HTMLElement | null>, callback: () => void) {
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) callback(); }, { threshold: 0.5 });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [ref, callback]);
+}
+
+function StatItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useScrollTrigger(ref, () => {
+    let start = 0;
+    const end = value;
+    const duration = 1500;
+    const timer = setInterval(() => {
+      start += Math.ceil(end / 40);
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, duration / 40);
+  });
+
+  return (
+    <div ref={ref}>
+      <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{count}{suffix}</div>
+      <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginTop: "0.4rem" }}>{label}</div>
+    </div>
+  );
+}
+
+function ContactSection() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    setTimeout(() => setStatus("sent"), 1500);
+  };
+
+  return (
+    <section id="contact-form" style={{ padding: "9rem 4rem", background: "var(--ink)", color: "var(--paper)" }} className="section-pad">
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <div className="reveal" style={{ marginBottom: "4rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,245,241,0.32)" }}>06 / Collaboration</span>
+          <h2 className="font-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", marginTop: "1rem" }}>Initialize a <em>Partnership</em></h2>
+        </div>
+
+        {status === "sent" ? (
+          <div className="reveal" style={{ padding: "4rem", border: "1px solid rgba(245,245,241,0.1)", textAlign: "center" }}>
+            <span className="font-script" style={{ fontSize: "2.5rem", display: "block", marginBottom: "1rem" }}>Received.</span>
+            <p className="font-sans" style={{ fontSize: "0.8rem", color: "rgba(245,245,241,0.5)", letterSpacing: "0.1em" }}>WE WILL REACH OUT WITHIN 24 HOURS.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="reveal" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>YOUR NAME</label>
+              <input required type="text" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem" }} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>EMAIL ADDRESS</label>
+              <input required type="email" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem" }} />
+            </div>
+            <div style={{ gridColumn: "span 2", display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "1.5rem" }}>
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>PROJECT VISION</label>
+              <textarea required rows={4} style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem", resize: "none" }} />
+            </div>
+            <div style={{ gridColumn: "span 2", marginTop: "2rem" }}>
+              <button type="submit" className="btn-primary" style={{ background: "var(--paper)", color: "var(--ink)", width: "100%", justifyContent: "center" }}>
+                {status === "sending" ? "TRANSMITTING..." : "SEND ENQUIRY"}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection() {
+  const testimonials = [
+    { name: "Arjun R.", role: "Producer, South Asia Films", text: "Kishanan brings a rare architectural precision to storytelling. He doesn't just cut frames; he engineers emotional arcs." },
+    { name: "Sarah J.", role: "CEO, Lux Brand Group", text: "The SunDawn Gala was a masterclass in production. Every detail felt deliberate, cinematic, and perfectly aligned with our brand's vision." },
+    { name: "Thiru V.", role: "Director, Heritage Arts", text: "His commitment to narrative depth is unparalleled. Kishanan is the bridge between traditional culture and modern global cinema." }
+  ];
+
+  return (
+    <section id="testimonials" style={{ padding: "9rem 4rem", background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>05 / Testimonials</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
+        </div>
+
+        <div className="testimonial-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem" }}>
+          {testimonials.map((t, i) => (
+            <div key={i} className={`reveal reveal-delay-${i + 1}`}>
+              <span className="font-serif" style={{ fontSize: "3rem", color: "rgba(45,36,36,0.1)", display: "block", marginBottom: "-1.5rem" }}>&ldquo;</span>
+              <p className="font-sans" style={{ fontSize: "1rem", lineHeight: 1.8, color: "rgba(45,36,36,0.75)", marginBottom: "2rem", fontStyle: "italic" }}>{t.text}</p>
+              <h4 className="font-serif" style={{ fontSize: "1.2rem", marginBottom: "0.2rem" }}>{t.name}</h4>
+              <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(45,36,36,0.35)" }}>{t.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 /* ─── CINEMATIC INTRO ─────────────────────────────────────────────────── */
@@ -122,7 +237,7 @@ function Navbar() {
           <a href="mailto:kishanan@newborncinema.com" className="btn-ghost hidden md:inline-flex" id="nav-collaborate-btn">Collaborate</a>
           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "none", padding: "0.5rem" }} aria-label="Toggle menu">
             <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
-              {[0,1,2].map((n) => (
+              {[0, 1, 2].map((n) => (
                 <span key={n} style={{ display: "block", height: "1px", background: "var(--ink)", transition: "all 0.3s", ...(n === 0 && menuOpen ? { transform: "rotate(45deg) translate(4px,4px)" } : n === 1 && menuOpen ? { opacity: 0 } : n === 2 && menuOpen ? { transform: "rotate(-45deg) translate(4px,-4px)" } : {}) }} />
               ))}
             </div>
@@ -207,11 +322,8 @@ function HeroSection() {
         </div>
 
         <div className="reveal reveal-delay-4" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.08)", display: "flex", gap: "2.5rem" }}>
-          {[{ n: "500+", l: "Productions" }, { n: "7+", l: "Years Active" }, { n: "2", l: "Ventures Founded" }].map((s) => (
-            <div key={s.n}>
-              <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{s.n}</div>
-              <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginTop: "0.4rem" }}>{s.l}</div>
-            </div>
+          {[{ n: 500, suffix: "+", l: "Productions" }, { n: 7, suffix: "+", l: "Years Active" }, { n: 2, suffix: "", l: "Ventures Founded" }].map((s) => (
+            <StatItem key={s.l} value={s.n} suffix={s.suffix} label={s.l} />
           ))}
         </div>
       </div>
@@ -265,16 +377,21 @@ function PhilosophySection() {
 
 /* ─── PROJECTS ────────────────────────────────────────────────────────── */
 const PROJECTS = [
-  { id: "newborn",     title: "The Threshold",      cat: "Newborn Cinema",       year: "2024", img: "/proj-newborn.png",    desc: "Feature narrative exploring displacement and South Asian identity." },
-  { id: "sundawn",     title: "SunDawn Grand Gala", cat: "SunDawn Eventz",        year: "2023", img: "/proj-sundawn.png",    desc: "Flagship luxury event produced for 800+ guests." },
-  { id: "eezham",      title: "Eezham Narratives",  cat: "Eezham Cinema",         year: "2024", img: "/proj-eezham.png",     desc: "Documentary series preserving Tamil cultural memory." },
-  { id: "freelance",   title: "The Edit Archives",  cat: "Freelance — 2021–2025", year: "2022", img: "/proj-edit.png",       desc: "500+ commercial cuts across brands, campaigns, and films." },
-  { id: "commercial",  title: "Commercial Frames",  cat: "Cinematography",        year: "2023", img: "/proj-commercial.png", desc: "Luxury brand productions shot across South Asia." },
-  { id: "archive",     title: "Archive Studies",    cat: "Case Studies",          year: "2025", img: "/proj-archive.png",    desc: "Strategic analysis of cinematic narrative in urban contexts." },
+  { id: "newborn", title: "The Threshold", cat: "Newborn Cinema", badge: "Feature", year: "2024", img: "/proj-newborn.png", desc: "Feature narrative exploring displacement and South Asian identity." },
+  { id: "sundawn", title: "SunDawn Grand Gala", cat: "SunDawn Eventz", badge: "Event", year: "2023", img: "/proj-sundawn.png", desc: "Flagship luxury event produced for 800+ guests." },
+  { id: "eezham", title: "Eezham Narratives", cat: "Eezham Cinema", badge: "Docuseries", year: "2024", img: "/proj-eezham.png", desc: "Documentary series preserving Tamil cultural memory." },
+  { id: "freelance", title: "The Edit Archives", cat: "Freelance", badge: "Post-Prod", year: "2022", img: "/proj-edit.png", desc: "500+ commercial cuts across brands, campaigns, and films." },
+  { id: "commercial", title: "Commercial Frames", cat: "Cinematography", badge: "Commercial", year: "2023", img: "/proj-commercial.png", desc: "Luxury brand productions shot across South Asia." },
+  { id: "archive", title: "Archive Studies", cat: "Case Studies", badge: "Consultancy", year: "2025", img: "/proj-archive.png", desc: "Strategic analysis of cinematic narrative in urban contexts." },
 ];
 
 function ImpactSection() {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const toggleExpand = (id: string) => {
+    setExpanded(expanded === id ? null : id);
+  };
 
   return (
     <section id="work" style={{ background: "var(--ink)", color: "var(--paper)", padding: "9rem 4rem" }} className="section-pad">
@@ -293,30 +410,58 @@ function ImpactSection() {
               style={{ cursor: "none" }}
               onMouseEnter={() => setHovered(proj.id)}
               onMouseLeave={() => setHovered(null)}
+              onClick={() => toggleExpand(proj.id)}
             >
-              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid rgba(245,245,241,0.07)" }}>
+              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid rgba(245,245,241,0.07)", position: "relative" }}>
                 <Image
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
-                  style={{ objectFit: "cover", filter: hovered === proj.id ? "grayscale(0)" : "grayscale(0.75)" }}
+                  style={{ objectFit: "cover", filter: hovered === proj.id || expanded === proj.id ? "grayscale(0)" : "grayscale(0.75)" }}
                 />
                 {/* Letterbox bars */}
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
+
+                {/* Expand Indicator */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered === proj.id && !expanded ? 1 : 0, transition: "opacity 0.3s" }}>
+                  <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", background: "rgba(0,0,0,0.6)", padding: "0.5rem 1rem", border: "1px solid rgba(255,255,255,0.2)" }}>VIEW DETAILS</span>
+                </div>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
                 <div>
-                  <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--paper)", marginBottom: "0.4rem", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
-                    {proj.title}
-                  </h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+                    <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--paper)", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id || expanded === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
+                      {proj.title}
+                    </h3>
+                    <span style={{ fontSize: "0.42rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.15rem 0.35rem", border: "1px solid rgba(245,245,241,0.2)", borderRadius: "2px", color: "rgba(245,245,241,0.5)" }}>
+                      {proj.badge}
+                    </span>
+                  </div>
                   <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,245,241,0.36)" }}>
                     {proj.cat}
                   </p>
-                  <div style={{ height: hovered === proj.id ? "auto" : "0", overflow: "hidden", transition: "height 0.4s ease", marginTop: hovered === proj.id ? "0.75rem" : "0" }}>
-                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(245,245,241,0.52)", lineHeight: 1.6 }}>
+
+                  {/* Expanded Content */}
+                  <div style={{ height: expanded === proj.id ? "auto" : hovered === proj.id ? "40px" : "0", opacity: hovered === proj.id || expanded === proj.id ? 1 : 0, overflow: "hidden", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", marginTop: "0.75rem" }}>
+                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(245,245,241,0.52)", lineHeight: 1.6, marginBottom: "1rem" }}>
                       {proj.desc}
                     </p>
+                    {expanded === proj.id && (
+                      <div className="reveal" style={{ padding: "1.5rem", border: "1px solid rgba(245,245,241,0.06)", background: "rgba(245,245,241,0.02)" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                          <div>
+                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "rgba(245,245,241,0.3)", display: "block", marginBottom: "0.25rem" }}>ROLE</span>
+                            <span className="font-sans" style={{ fontSize: "0.58rem" }}>Lead Producer / Editor</span>
+                          </div>
+                          <div>
+                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "rgba(245,245,241,0.3)", display: "block", marginBottom: "0.25rem" }}>STATUS</span>
+                            <span className="font-sans" style={{ fontSize: "0.58rem" }}>Released / Global</span>
+                          </div>
+                        </div>
+                        <button className="font-sans" style={{ marginTop: "1.5rem", fontSize: "0.52rem", border: "none", background: "none", color: "var(--paper)", borderBottom: "1px solid", padding: "0", cursor: "none" }}>EXPLORE CASE STUDY →</button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <span className="font-sans" style={{ fontSize: "0.52rem", color: "rgba(245,245,241,0.2)", flexShrink: 0 }}>{proj.year}</span>
@@ -431,10 +576,10 @@ function Footer() {
             <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Connection</h5>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
-                { label: "Fiverr",     href: "https://www.fiverr.com" },
-                { label: "LinkedIn",   href: "https://www.linkedin.com" },
-                { label: "Instagram",  href: "https://www.instagram.com" },
-                { label: "Vimeo",      href: "https://vimeo.com" },
+                { label: "Fiverr", href: "https://www.fiverr.com" },
+                { label: "LinkedIn", href: "https://www.linkedin.com" },
+                { label: "Instagram", href: "https://www.instagram.com" },
+                { label: "Vimeo", href: "https://vimeo.com" },
               ].map((s) => (
                 <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="font-sans"
                   style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
@@ -495,6 +640,8 @@ export default function Home() {
         <PhilosophySection />
         <ImpactSection />
         <EvolutionSection />
+        <TestimonialsSection />
+        <ContactSection />
         <Footer />
       </main>
     </>
