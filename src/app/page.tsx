@@ -1,479 +1,384 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState, useRef, useCallback } from "react";
 
-/* ─── SCROLL REVEAL HOOK ─────────────────────────────────────────────── */
+/* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
-      { threshold: 0.12 }
+      { threshold: 0.08 }
     );
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 }
 
-/* ─── COMPONENTS ──────────────────────────────────────────────────────── */
-
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+function useScrollProgress() {
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
+    const bar = document.getElementById("scroll-progress");
+    const onScroll = () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (bar) bar.style.width = `${Math.min(pct, 100)}%`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+}
+
+function useCustomCursor() {
+  useEffect(() => {
+    const dot  = document.getElementById("cursor-dot");
+    const ring = document.getElementById("cursor-ring");
+    if (!dot || !ring) return;
+    const onMove = (e: MouseEvent) => {
+      dot.style.left  = `${e.clientX}px`;
+      dot.style.top   = `${e.clientY}px`;
+      ring.style.left = `${e.clientX}px`;
+      ring.style.top  = `${e.clientY}px`;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+}
+
+/* ─── CINEMATIC INTRO ─────────────────────────────────────────────────── */
+function Intro({ onDone }: { onDone: () => void }) {
+  const [hiding, setHiding] = useState(false);
+
+  useEffect(() => {
+    // After 2s hold, trigger hide animation
+    const t1 = setTimeout(() => setHiding(true), 1800);
+    // After animation completes, unmount
+    const t2 = setTimeout(() => onDone(), 2900);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [onDone]);
+
   return (
-    <nav className={`site-nav ${scrolled ? "scrolled" : ""}`} aria-label="Main navigation">
-      <a href="#hero" className="font-serif text-xl font-semibold tracking-tight" style={{ color: "var(--ink)" }}>
-        KS
-      </a>
-      <div className="hidden md:flex items-center gap-10">
-        {["Philosophy", "Work", "Evolution", "Contact"].map((item) => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
-            className="font-sans font-medium uppercase tracking-[0.18em] hover:opacity-50 transition-opacity"
-            style={{ fontSize: "0.625rem", color: "var(--ink)" }}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
-      <a href="mailto:hello@kishanansasikumar.com" className="btn-ghost hidden md:inline-flex">
-        Collaborate
-      </a>
-    </nav>
+    <div id="intro-overlay" className={hiding ? "hide" : ""}>
+      <div className="intro-logo">Kishanan S.</div>
+      <div className="intro-sub">Filmmaker &middot; CEO &middot; Visionary</div>
+      <div className="intro-bar" />
+    </div>
   );
 }
 
-function HeroSection() {
+/* ─── MARQUEE STRIP ───────────────────────────────────────────────────── */
+function Marquee({ dark = false }: { dark?: boolean }) {
+  const items = [
+    "Newborn Cinema", "·", "SunDawn Eventz", "·", "Cinematographer", "·",
+    "Creative CEO", "·", "Eezham Cinema", "·", "Editorial Vision", "·",
+    "500+ Productions", "·", "South Asian Narratives", "·"
+  ];
+  const doubled = [...items, ...items];
+
   return (
-    <section
-      id="hero"
-      className="relative flex flex-col md:flex-row min-h-screen"
-      style={{ borderBottom: "1px solid rgba(45,36,36,0.08)" }}
-    >
-      {/* Portrait Anchor — Left 60% */}
-      <div className="md:w-[60%] relative overflow-hidden" style={{ minHeight: "100vh" }}>
-        <div className="portrait-placeholder" style={{ minHeight: "100vh" }}>
-          {/* Letterbox frame indicator */}
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: "3px",
-              background: "rgba(245,245,241,0.15)",
-            }}
-          />
-          <span
-            className="font-sans uppercase"
-            style={{
-              fontSize: "0.6rem",
-              letterSpacing: "0.3em",
-              color: "rgba(45,36,36,0.25)",
-              position: "absolute",
-              bottom: "1.25rem",
-              left: "1.5rem",
-            }}
-          >
-            Kishanan Sasikumar — Authoritative Portrait
+    <div style={{ overflow: "hidden", padding: "1.25rem 0", borderTop: `1px solid ${dark ? "rgba(245,245,241,0.07)" : "rgba(45,36,36,0.06)"}`, borderBottom: `1px solid ${dark ? "rgba(245,245,241,0.07)" : "rgba(45,36,36,0.06)"}`, background: dark ? "transparent" : "transparent" }}>
+      <div className="marquee-track">
+        {doubled.map((item, i) => (
+          <span key={i} className="font-sans" style={{
+            fontSize: "0.6rem", letterSpacing: "0.25em", textTransform: "uppercase",
+            color: dark ? "rgba(245,245,241,0.35)" : "rgba(45,36,36,0.35)",
+            padding: "0 2rem"
+          }}>
+            {item}
           </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── NAVBAR ──────────────────────────────────────────────────────────── */
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  const links = ["Philosophy", "Work", "Evolution", "Contact"];
+
+  return (
+    <>
+      <nav className={`site-nav ${scrolled ? "scrolled" : ""}`} id="main-nav">
+        <a href="#hero" className="font-serif" style={{ fontSize: "1.2rem", fontWeight: 600, color: "var(--ink)", textDecoration: "none" }}>KS</a>
+
+        <div className="hidden md:flex items-center gap-10">
+          {links.map((l) => (
+            <a key={l} href={`#${l.toLowerCase()}`} className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, color: "var(--ink)", textDecoration: "none", opacity: 0.65, transition: "opacity 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
+            >{l}</a>
+          ))}
         </div>
 
-        {/* Letterbox cinema frame top/bottom */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "48px",
-            background: "rgba(0,0,0,0.55)",
-            zIndex: 2,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "48px",
-            background: "rgba(0,0,0,0.55)",
-            zIndex: 2,
-          }}
-        />
-
-        {/* Floating Thread */}
-        <div
-          className="thread-text"
-          style={{
-            position: "absolute",
-            bottom: "80px",
-            right: "2.5rem",
-            zIndex: 10,
-            transform: "rotate(-8deg)",
-          }}
-        >
-          Visionary
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <a href="mailto:kishanan@newborncinema.com" className="btn-ghost hidden md:inline-flex" id="nav-collaborate-btn">Collaborate</a>
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "none", padding: "0.5rem" }} aria-label="Toggle menu">
+            <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
+              {[0,1,2].map((n) => (
+                <span key={n} style={{ display: "block", height: "1px", background: "var(--ink)", transition: "all 0.3s", ...(n === 0 && menuOpen ? { transform: "rotate(45deg) translate(4px,4px)" } : n === 1 && menuOpen ? { opacity: 0 } : n === 2 && menuOpen ? { transform: "rotate(-45deg) translate(4px,-4px)" } : {}) }} />
+              ))}
+            </div>
+          </button>
         </div>
+      </nav>
+
+      {/* Mobile full-screen menu */}
+      <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 900, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", transition: "opacity 0.3s ease, visibility 0.3s ease", opacity: menuOpen ? 1 : 0, visibility: menuOpen ? "visible" : "hidden" }}>
+        {links.map((l) => (
+          <a key={l} href={`#${l.toLowerCase()}`} className="font-serif" onClick={() => setMenuOpen(false)} style={{ fontSize: "2.8rem", color: "var(--ink)", textDecoration: "none", fontWeight: 500, opacity: 0.85 }}>{l}</a>
+        ))}
+        <a href="mailto:kishanan@newborncinema.com" className="btn-primary" style={{ marginTop: "1rem" }}>Collaborate</a>
+      </div>
+    </>
+  );
+}
+
+/* ─── HERO ────────────────────────────────────────────────────────────── */
+function HeroSection() {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex" }}>
+      {/* Mobile portrait strip */}
+      <div className="hero-portrait-mobile">
+        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.1) contrast(1.08)" }} priority />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "32px", background: "#000", zIndex: 5 }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "#000", zIndex: 5 }} />
       </div>
 
-      {/* Editorial Content — Right 40% */}
-      <div
-        className="md:w-[40%] flex flex-col justify-center"
-        style={{
-          padding: "6rem 4rem",
-          background: "var(--paper)",
-          paddingTop: "9rem",
-        }}
-      >
-        {/* Label */}
-        <p
-          className="font-sans uppercase reveal"
-          style={{
-            fontSize: "0.6rem",
-            letterSpacing: "0.3em",
-            color: "rgba(45,36,36,0.4)",
-            marginBottom: "2rem",
-          }}
-        >
+      {/* Desktop portrait — 58% */}
+      <div className="hidden md:block" style={{ width: "58%", position: "relative", overflow: "hidden", minHeight: "100vh", background: "#111" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "52px", background: "#000", zIndex: 10 }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "52px", background: "#000", zIndex: 10 }} />
+
+        <Image
+          src="/portrait.png"
+          alt="Kishanan Sasikumar — Filmmaker & Creative Entrepreneur"
+          fill priority sizes="58vw"
+          style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.12) contrast(1.08)", opacity: loaded ? 1 : 0, transition: "opacity 1.4s ease" }}
+          onLoad={() => setLoaded(true)}
+        />
+
+        {/* Left gradient */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 55%)", zIndex: 5 }} />
+
+        {/* Thread */}
+        <div className="font-script" style={{ position: "absolute", bottom: "80px", right: "2.5rem", zIndex: 15, fontSize: "3rem", opacity: 0.5, color: "#fff", transform: "rotate(-8deg)", textShadow: "0 2px 24px rgba(0,0,0,0.6)" }}>
+          Visionary
+        </div>
+
+        {/* Caption */}
+        <span className="font-sans" style={{ position: "absolute", bottom: "18px", left: "2rem", zIndex: 15, fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
+          Kishanan Sasikumar — Filmmaker &amp; CEO
+        </span>
+      </div>
+
+      {/* Editorial content — 42% */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "7rem 4rem 4rem", background: "var(--paper)" }}
+        className="section-pad">
+
+        <p className="font-sans reveal" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(45,36,36,0.42)", marginBottom: "2rem" }}>
           CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
         </p>
 
-        {/* Primary Headline */}
-        <h1
-          className="font-serif reveal reveal-delay-1"
-          style={{
-            fontSize: "clamp(3.2rem, 5vw, 5.5rem)",
-            fontWeight: 600,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            color: "var(--ink)",
-            marginBottom: "2rem",
-          }}
-        >
-          Filmmaker &amp;
-          <br />
-          Creative
-          <br />
-          Entrepreneur
+        <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
+          Filmmaker &amp;<br />Creative<br />Entrepreneur
         </h1>
 
-        {/* Script accent */}
-        <div
-          className="font-script reveal reveal-delay-2"
-          style={{ fontSize: "2rem", opacity: 0.35, marginBottom: "2rem", color: "var(--ink)" }}
-        >
+        <div className="font-script reveal reveal-delay-2" style={{ fontSize: "1.75rem", opacity: 0.35, marginBottom: "1.75rem" }}>
           Crafting Cinematic Experiences
         </div>
 
-        {/* Editorial subtext */}
-        <p
-          className="font-sans justify-editorial reveal reveal-delay-2"
-          style={{
-            fontSize: "1rem",
-            lineHeight: 1.75,
-            color: "rgba(45,36,36,0.72)",
-            maxWidth: "380px",
-          }}
-        >
+        <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "rgba(45,36,36,0.68)", maxWidth: "360px" }}>
           Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
         </p>
 
-        {/* CTAs */}
-        <div className="flex flex-wrap gap-4 reveal reveal-delay-3" style={{ marginTop: "3rem" }}>
-          <button className="btn-primary">View Latest Work</button>
-          <button className="btn-ghost">Collaborate</button>
+        <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <a href="#work" className="btn-primary" id="hero-view-work-btn">View Latest Work</a>
+          <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="hero-collaborate-btn">Collaborate</a>
         </div>
 
-        {/* Footer rule */}
-        <div
-          style={{
-            marginTop: "4rem",
-            paddingTop: "2rem",
-            borderTop: "1px solid rgba(45,36,36,0.08)",
-            display: "flex",
-            gap: "2rem",
-          }}
-        >
-          {[{ n: "500+", l: "Productions" }, { n: "7+", l: "Years" }, { n: "2", l: "Ventures Founded" }].map((s) => (
-            <div key={s.n} className="reveal reveal-delay-4">
-              <div className="font-serif" style={{ fontSize: "1.75rem", fontWeight: 600, color: "var(--ink)" }}>{s.n}</div>
-              <div className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.25em", color: "rgba(45,36,36,0.4)" }}>{s.l}</div>
+        <div className="reveal reveal-delay-4" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.08)", display: "flex", gap: "2.5rem" }}>
+          {[{ n: "500+", l: "Productions" }, { n: "7+", l: "Years Active" }, { n: "2", l: "Ventures Founded" }].map((s) => (
+            <div key={s.n}>
+              <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{s.n}</div>
+              <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginTop: "0.4rem" }}>{s.l}</div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <div style={{ position: "absolute", bottom: "2.5rem", right: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }} className="hidden md:flex">
+        <div style={{ width: "1px", height: "50px", background: "var(--ink)", opacity: 0.18 }} />
+        <span className="font-sans" style={{ fontSize: "0.42rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.28)", writingMode: "vertical-rl" }}>Scroll</span>
+      </div>
     </section>
   );
 }
 
+/* ─── PHILOSOPHY ──────────────────────────────────────────────────────── */
 function PhilosophySection() {
   return (
-    <section
-      id="philosophy"
-      style={{
-        padding: "8rem 4rem",
-        background: "var(--paper)",
-        borderBottom: "1px solid rgba(45,36,36,0.08)",
-      }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        {/* Section label */}
-        <div
-          className="flex items-center gap-6 reveal"
-          style={{ marginBottom: "5rem" }}
-        >
-          <span className="font-sans uppercase" style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.4)" }}>
-            02 / Philosophy
-          </span>
-          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.08)" }} />
-          <span className="font-script" style={{ fontSize: "2rem", opacity: 0.25, color: "var(--ink)" }}>The Mindset</span>
-        </div>
+    <section id="philosophy" style={{ background: "var(--paper)" }}>
+      <Marquee />
+      <div className="section-pad" style={{ padding: "9rem 4rem", borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
+        <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+          <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>02 / Philosophy</span>
+            <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+            <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Mindset</span>
+          </div>
 
-        <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4vw, 4rem)", lineHeight: 1.1, marginBottom: "4rem", letterSpacing: "-0.01em" }}>
-          The Creative
-          <br />
-          <em>Philosophy</em>
-        </h2>
+          <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.8rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4.5rem" }}>
+            The Creative<br /><em>Philosophy</em>
+          </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem" }}>
-          <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "rgba(45,36,36,0.82)" }}>
-            Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration; they are strategic coordinates — engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story.
-          </p>
-          <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "rgba(45,36,36,0.82)" }}>
-            Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move. Every cut is a narrative beat. We build creative ventures that resonate because they are built on architectural foundations of intent, not instinct alone.
-          </p>
+          <div className="philosophy-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem" }}>
+            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "rgba(45,36,36,0.78)" }}>
+              Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration — they are strategic coordinates engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story.
+            </p>
+            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "rgba(45,36,36,0.78)" }}>
+              Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move. Every cut is a narrative beat. We build creative ventures that resonate because they are built on architectural foundations of intent — not instinct alone.
+            </p>
+          </div>
+
+          <div className="reveal" style={{ marginTop: "5rem", display: "flex", alignItems: "center", gap: "2rem" }}>
+            <div style={{ height: "1px", width: "50px", background: "var(--ink)", opacity: 0.12 }} />
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(45,36,36,0.28)" }}>
+              Crafting Cinematic Experiences &amp; Building Creative Ventures
+            </span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
+/* ─── PROJECTS ────────────────────────────────────────────────────────── */
 const PROJECTS = [
-  { title: "The Threshold", cat: "Newborn Cinema", year: "2024" },
-  { title: "SunDawn Presents", cat: "SunDawn Eventz", year: "2023" },
-  { title: "Eezham Narratives", cat: "Eezham Cinema", year: "2024" },
-  { title: "Commercial Canon", cat: "Freelance Edit — 2021-25", year: "2022" },
-  { title: "Cultural Frames", cat: "Cinematography", year: "2023" },
-  { title: "Archive Studies", cat: "Case Studies", year: "2025" },
+  { id: "newborn",     title: "The Threshold",      cat: "Newborn Cinema",       year: "2024", img: "/proj-newborn.png",    desc: "Feature narrative exploring displacement and South Asian identity." },
+  { id: "sundawn",     title: "SunDawn Grand Gala", cat: "SunDawn Eventz",        year: "2023", img: "/proj-sundawn.png",    desc: "Flagship luxury event produced for 800+ guests." },
+  { id: "eezham",      title: "Eezham Narratives",  cat: "Eezham Cinema",         year: "2024", img: "/proj-eezham.png",     desc: "Documentary series preserving Tamil cultural memory." },
+  { id: "freelance",   title: "The Edit Archives",  cat: "Freelance — 2021–2025", year: "2022", img: "/proj-edit.png",       desc: "500+ commercial cuts across brands, campaigns, and films." },
+  { id: "commercial",  title: "Commercial Frames",  cat: "Cinematography",        year: "2023", img: "/proj-commercial.png", desc: "Luxury brand productions shot across South Asia." },
+  { id: "archive",     title: "Archive Studies",    cat: "Case Studies",          year: "2025", img: "/proj-archive.png",    desc: "Strategic analysis of cinematic narrative in urban contexts." },
 ];
 
 function ImpactSection() {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   return (
-    <section
-      id="work"
-      style={{ background: "var(--ink)", color: "var(--paper)", padding: "8rem 4rem" }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        <div className="flex flex-col md:flex-row justify-between items-end reveal" style={{ marginBottom: "4rem" }}>
-          <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5rem)", letterSpacing: "-0.02em", lineHeight: 1.05 }}>
-            Selected
-            <br />
-            Productions
+    <section id="work" style={{ background: "var(--ink)", color: "var(--paper)", padding: "9rem 4rem" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "1rem" }}>
+          <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
+            Selected<br />Productions
           </h2>
-          <span className="font-script" style={{ fontSize: "2.5rem", opacity: 0.3, color: "var(--paper)" }}>
-            Cinematic Vision
-          </span>
+          <span className="font-script" style={{ fontSize: "2.2rem", opacity: 0.3 }}>Cinematic Vision</span>
         </div>
 
         <div className="triptych-grid">
           {PROJECTS.map((proj, i) => (
-            <div key={proj.title} className={`project-card reveal reveal-delay-${(i % 3) + 1}`} style={{ cursor: "pointer" }}>
-              {/* Cinematic letterbox frame placeholder */}
-              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid rgba(245,245,241,0.08)" }}>
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: `rgba(245,245,241,${0.02 + i * 0.015})`,
-                  }}
-                >
-                  {/* Crosshair frame guide */}
-                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ width: "20px", height: "1px", background: "rgba(245,245,241,0.15)", position: "absolute" }} />
-                    <div style={{ height: "20px", width: "1px", background: "rgba(245,245,241,0.15)", position: "absolute" }} />
-                  </div>
-                  <span className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(245,245,241,0.15)" }}>
-                    Frame 0{i + 1}
-                  </span>
-                </div>
+            <div key={proj.id} id={`project-${proj.id}`}
+              className={`project-card reveal reveal-delay-${(i % 3) + 1}`}
+              style={{ cursor: "none" }}
+              onMouseEnter={() => setHovered(proj.id)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid rgba(245,245,241,0.07)" }}>
+                <Image
+                  src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
+                  className="letterbox-img"
+                  style={{ objectFit: "cover", filter: hovered === proj.id ? "grayscale(0)" : "grayscale(0.75)" }}
+                />
+                {/* Letterbox bars */}
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
               </div>
-              <div className="flex items-start justify-between">
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
                 <div>
-                  <h3
-                    className="proj-title font-sans font-semibold uppercase"
-                    style={{ fontSize: "0.7rem", letterSpacing: "0.2em", color: "var(--paper)", marginBottom: "0.4rem" }}
-                  >
+                  <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--paper)", marginBottom: "0.4rem", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
                     {proj.title}
                   </h3>
-                  <p className="font-sans" style={{ fontSize: "0.6rem", letterSpacing: "0.15em", color: "rgba(245,245,241,0.4)", textTransform: "uppercase" }}>
+                  <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,245,241,0.36)" }}>
                     {proj.cat}
                   </p>
+                  <div style={{ height: hovered === proj.id ? "auto" : "0", overflow: "hidden", transition: "height 0.4s ease", marginTop: hovered === proj.id ? "0.75rem" : "0" }}>
+                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(245,245,241,0.52)", lineHeight: 1.6 }}>
+                      {proj.desc}
+                    </p>
+                  </div>
                 </div>
-                <span className="font-sans" style={{ fontSize: "0.6rem", color: "rgba(245,245,241,0.25)" }}>{proj.year}</span>
+                <span className="font-sans" style={{ fontSize: "0.52rem", color: "rgba(245,245,241,0.2)", flexShrink: 0 }}>{proj.year}</span>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <Marquee dark />
     </section>
   );
 }
 
-const PHASES = [
-  {
-    phase: "01",
-    years: "2019 — 2021",
-    title: "The Designer",
-    body: "Establishing the fundamental laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.",
-    w: "md:col-span-4",
-    bg: "#EBEBD8",
-    dark: false,
-  },
-  {
-    phase: "02",
-    years: "2021 — 2025",
-    title: "The Editor",
-    body: "500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.",
-    w: "md:col-span-4",
-    bg: "#E0E0D6",
-    dark: false,
-  },
-];
-
+/* ─── EVOLUTION ───────────────────────────────────────────────────────── */
 function EvolutionSection() {
   return (
-    <section
-      id="evolution"
-      style={{ padding: "8rem 4rem", background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.08)" }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        {/* Header */}
-        <div className="flex items-center gap-6 reveal" style={{ marginBottom: "5rem" }}>
-          <span className="font-sans uppercase" style={{ fontSize: "0.6rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.4)" }}>
-            04 / Career Arc
-          </span>
-          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.08)" }} />
-          <span className="font-script" style={{ fontSize: "2rem", opacity: 0.25, color: "var(--ink)" }}>The Thread</span>
+    <section id="evolution" style={{ padding: "9rem 4rem", background: "var(--paper)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "4rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>04 / Career Arc</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Thread</span>
         </div>
-        <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4vw, 4rem)", marginBottom: "4rem", letterSpacing: "-0.01em" }}>
+
+        <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4rem" }}>
           Designer → Editor → <em>CEO</em>
         </h2>
 
-        {/* Bento Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(12, 1fr)",
-            gridAutoRows: "minmax(280px, auto)",
-            gap: "1.25rem",
-          }}
-        >
-          {/* Phase 1: Designer */}
-          <div
-            className="bento-card reveal"
-            style={{
-              gridColumn: "span 4",
-              background: "#E8E8DE",
-              padding: "2.5rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-            }}
-          >
-            <span className="font-serif" style={{ position: "absolute", top: "1.5rem", right: "1.5rem", fontSize: "5rem", color: "rgba(45,36,36,0.06)", lineHeight: 1 }}>01</span>
-            <span className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.4)", marginBottom: "0.75rem" }}>2019 — 2021</span>
-            <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1rem", color: "var(--ink)" }}>The Designer</h3>
-            <p className="font-sans" style={{ fontSize: "0.85rem", lineHeight: 1.7, color: "rgba(45,36,36,0.65)" }}>
-              Establishing the fundamental laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.
-            </p>
+        <div className="bento-grid">
+          {/* Phase 1 */}
+          <div className="bento-card bento-phase-sm reveal" style={{ gridColumn: "span 4", background: "#E8E8DE", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
+            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "rgba(45,36,36,0.05)", lineHeight: 1 }}>01</span>
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginBottom: "0.7rem" }}>2019 — 2021</span>
+            <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Designer</h3>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "rgba(45,36,36,0.58)" }}>Establishing laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.</p>
           </div>
 
-          {/* Phase 3: CEO (Hero/Large Bento) */}
-          <div
-            className="bento-card reveal reveal-delay-1"
-            style={{
-              gridColumn: "span 8",
-              gridRow: "span 2",
-              background: "var(--ink)",
-              color: "var(--paper)",
-              padding: "4rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            {/* Thread overlay */}
-            <div
-              className="font-script"
-              style={{
-                position: "absolute",
-                top: "3rem",
-                right: "-2rem",
-                fontSize: "8rem",
-                opacity: 0.06,
-                color: "var(--paper)",
-                transform: "rotate(-15deg)",
-                whiteSpace: "nowrap",
-                userSelect: "none",
-              }}
-            >
+          {/* CEO — Hero Bento */}
+          <div className="bento-card bento-ceo reveal reveal-delay-1" style={{ gridColumn: "span 8", gridRow: "span 2", background: "var(--ink)", color: "var(--paper)", padding: "4rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+            <div className="font-script" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
               Building Ventures
             </div>
-
-            <span className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(245,245,241,0.4)", marginBottom: "1rem" }}>
-              Present — CEO &amp; Producer
-            </span>
-            <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 4vw, 4.5rem)", lineHeight: 1.05, marginBottom: "1.5rem", color: "var(--paper)", letterSpacing: "-0.02em" }}>
-              Newborn Cinema
-              <br />
-              &amp; SunDawn Eventz
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,245,241,0.38)", marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
+            <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
+              Newborn Cinema<br />&amp; SunDawn Eventz
             </h3>
-            <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.75, color: "rgba(245,245,241,0.72)", marginBottom: "2.5rem" }}>
-              Transitioning a decade of craft into institutional leadership. Founding and scaling South Asian creative ventures that redefine how regional narratives reach global audiences.
+            <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.8, color: "rgba(245,245,241,0.65)", marginBottom: "2.5rem" }}>
+              Transitioning a decade of craft into institutional leadership — founding and scaling South Asian creative ventures that redefine how regional narratives reach global audiences.
             </p>
-            <div className="flex gap-4">
-              <button className="btn-primary" style={{ background: "var(--paper)", color: "var(--ink)" }}>
-                View Latest Work
-              </button>
-              <button className="btn-ghost" style={{ borderColor: "rgba(245,245,241,0.3)", color: "var(--paper)" }}>
-                Collaborate
-              </button>
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <a href="#work" className="btn-primary" id="evo-view-work-btn" style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--paper)" }}>View Latest Work</a>
+              <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "rgba(245,245,241,0.28)", color: "var(--paper)" }}>Collaborate</a>
             </div>
-
-            {/* Phase marker */}
-            <span className="font-serif" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", fontSize: "7rem", color: "rgba(245,245,241,0.04)", lineHeight: 1 }}>03</span>
+            <span className="font-serif" style={{ position: "absolute", bottom: "1.5rem", right: "2.5rem", fontSize: "7rem", color: "rgba(245,245,241,0.04)", lineHeight: 1 }}>03</span>
           </div>
 
-          {/* Phase 2: Editor */}
-          <div
-            className="bento-card reveal reveal-delay-2"
-            style={{
-              gridColumn: "span 4",
-              background: "#DEDECE",
-              padding: "2.5rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-            }}
-          >
-            <span className="font-serif" style={{ position: "absolute", top: "1.5rem", right: "1.5rem", fontSize: "5rem", color: "rgba(45,36,36,0.06)", lineHeight: 1 }}>02</span>
-            <span className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.4)", marginBottom: "0.75rem" }}>2021 — 2025</span>
-            <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1rem", color: "var(--ink)" }}>The Editor</h3>
-            <p className="font-sans" style={{ fontSize: "0.85rem", lineHeight: 1.7, color: "rgba(45,36,36,0.65)" }}>
-              500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.
-            </p>
+          {/* Phase 2 */}
+          <div className="bento-card bento-phase-sm reveal reveal-delay-2" style={{ gridColumn: "span 4", background: "#DEDECE", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
+            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "rgba(45,36,36,0.05)", lineHeight: 1 }}>02</span>
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginBottom: "0.7rem" }}>2021 — 2025</span>
+            <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Editor</h3>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "rgba(45,36,36,0.58)" }}>500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
           </div>
         </div>
       </div>
@@ -481,136 +386,109 @@ function EvolutionSection() {
   );
 }
 
+/* ─── FOOTER ──────────────────────────────────────────────────────────── */
 function Footer() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) setSubmitted(true);
+  };
+
   return (
-    <footer
-      id="contact"
-      style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.08)", padding: "6rem 4rem 3rem" }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        {/* CTA */}
-        <div
-          className="reveal"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            padding: "5rem 0",
-            borderBottom: "1px solid rgba(45,36,36,0.06)",
-            marginBottom: "5rem",
-          }}
-        >
-          <span className="font-script" style={{ fontSize: "2.5rem", opacity: 0.25, marginBottom: "1.5rem", color: "var(--ink)" }}>Let's create</span>
-          <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 6vw, 6rem)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "2.5rem" }}>
-            Something
-            <br />
-            <em>Lasting</em>
+    <footer id="contact" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", padding: "7rem 4rem 3rem" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+        <div className="reveal" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "5rem 0", marginBottom: "6rem", borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
+          <span className="font-script" style={{ fontSize: "2rem", opacity: 0.26, marginBottom: "1.5rem" }}>Let&apos;s create</span>
+          <h2 className="font-serif" style={{ fontSize: "clamp(3.5rem, 7vw, 8rem)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "2.5rem" }}>
+            Something<br /><em>Lasting</em>
           </h2>
-          <button className="btn-primary">Begin Collaboration</button>
+          <a href="mailto:kishanan@newborncinema.com" className="btn-primary" id="footer-cta-btn">Begin Collaboration</a>
         </div>
 
-        {/* Footer Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3rem" }}>
-          {/* Brand */}
+        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3rem" }}>
           <div>
-            <h3 className="font-serif" style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Kishanan S.</h3>
-            <p className="font-sans" style={{ fontSize: "0.65rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.4)", lineHeight: 2.2 }}>
-              Filmmaker &amp; Creative CEO
-              <br />Newborn Cinema
-              <br />SunDawn Eventz
-              <br />© 2026
-            </p>
-          </div>
-
-          {/* Platform */}
-          <div>
-            <h5 className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.35)", marginBottom: "1.5rem" }}>Platform</h5>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-              {["Impact", "Philosophy", "Evolution", "Archives"].map((link) => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase()}`} className="font-sans" style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.8 }}>
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connection */}
-          <div>
-            <h5 className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.35)", marginBottom: "1.5rem" }}>Connection</h5>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-              {["Fiverr", "LinkedIn", "Instagram", "Vimeo"].map((s) => (
-                <li key={s}>
-                  <a href="#" className="font-sans" style={{ fontSize: "0.75rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.8 }}>
-                    {s}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h5 className="font-sans uppercase" style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(45,36,36,0.35)", marginBottom: "1.5rem" }}>Insights</h5>
-            <p className="font-sans" style={{ fontSize: "0.75rem", lineHeight: 1.7, color: "rgba(45,36,36,0.55)", marginBottom: "1.25rem" }}>
-              Dispatches on craft, leadership, and cinematic thinking.
-            </p>
-            <div style={{ position: "relative", borderBottom: "1px solid var(--ink)" }}>
-              <input
-                type="email"
-                placeholder="YOUR EMAIL ADDRESS"
-                style={{
-                  width: "100%",
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--ink)",
-                  paddingBottom: "0.6rem",
-                }}
-              />
-              <button className="font-sans uppercase" style={{ position: "absolute", right: 0, bottom: "0.5rem", fontSize: "0.55rem", letterSpacing: "0.2em", fontWeight: 700, background: "transparent", border: "none", cursor: "pointer", color: "var(--ink)" }}>
-                →
-              </button>
+            <h3 className="font-serif" style={{ fontSize: "1.4rem", marginBottom: "1.25rem" }}>Kishanan S.</h3>
+            <div className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", lineHeight: 2.4 }}>
+              Filmmaker &amp; Creative CEO<br />Newborn Cinema<br />SunDawn Eventz<br />© 2026
             </div>
           </div>
+
+          <div>
+            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Platform</h5>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {["Work", "Philosophy", "Evolution", "Archives"].map((l) => (
+                <li key={l}><a href={`#${l.toLowerCase()}`} className="font-sans" style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+                >{l}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Connection</h5>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {[
+                { label: "Fiverr",     href: "https://www.fiverr.com" },
+                { label: "LinkedIn",   href: "https://www.linkedin.com" },
+                { label: "Instagram",  href: "https://www.instagram.com" },
+                { label: "Vimeo",      href: "https://vimeo.com" },
+              ].map((s) => (
+                <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="font-sans"
+                  style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+                >{s.label}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Insights</h5>
+            <p className="font-sans" style={{ fontSize: "0.72rem", lineHeight: 1.7, color: "rgba(45,36,36,0.48)", marginBottom: "1.25rem" }}>Dispatches on craft, leadership, and cinematic thinking.</p>
+            {submitted ? (
+              <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(45,36,36,0.65)", fontStyle: "italic" }}>Thank you — you&apos;ll hear from us soon.</p>
+            ) : (
+              <form onSubmit={handleSubscribe} style={{ position: "relative", borderBottom: "1px solid rgba(45,36,36,0.4)" }}>
+                <input id="newsletter-email" type="email" placeholder="YOUR EMAIL ADDRESS" value={email} onChange={(e) => setEmail(e.target.value)} required
+                  style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontFamily: "Poppins, sans-serif", fontSize: "0.56rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink)", paddingBottom: "0.7rem", cursor: "none" }}
+                />
+                <button type="submit" style={{ position: "absolute", right: 0, bottom: "0.5rem", fontSize: "0.55rem", letterSpacing: "0.15em", fontWeight: 700, background: "transparent", border: "none", cursor: "none", color: "var(--ink)" }}>→</button>
+              </form>
+            )}
+          </div>
         </div>
 
-        {/* Bottom row */}
-        <div
-          style={{
-            marginTop: "4rem",
-            paddingTop: "2rem",
-            borderTop: "1px solid rgba(45,36,36,0.04)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <span className="font-sans" style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(45,36,36,0.25)", fontStyle: "italic" }}>
-            Crafting Cinematic Experiences &amp; Building Creative Ventures.
-          </span>
-          <span className="font-sans" style={{ fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(45,36,36,0.25)" }}>
-            All Rights Reserved
-          </span>
+        <div style={{ marginTop: "4.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.2)", fontStyle: "italic" }}>Crafting Cinematic Experiences &amp; Building Creative Ventures.</span>
+          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.2)" }}>All Rights Reserved</span>
         </div>
       </div>
     </footer>
   );
 }
 
-/* ─── PAGE ROOT ───────────────────────────────────────────────────────── */
+/* ─── ROOT ────────────────────────────────────────────────────────────── */
 export default function Home() {
+  const [introVisible, setIntroVisible] = useState(true);
+  const doneCallback = useCallback(() => setIntroVisible(false), []);
+
   useReveal();
+  useScrollProgress();
+  useCustomCursor();
+
   return (
     <>
+      {/* Global chrome */}
+      <div id="cursor-dot" />
+      <div id="cursor-ring" />
+      <div id="scroll-progress" />
+
+      {/* Cinematic intro */}
+      {introVisible && <Intro onDone={doneCallback} />}
+
       <Navbar />
       <main>
         <HeroSection />

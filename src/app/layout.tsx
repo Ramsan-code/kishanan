@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { VisualEditsMessenger } from "orchids-visual-edits";
 
 export const metadata: Metadata = {
   title: "Kishanan Sasikumar — Filmmaker & Creative Entrepreneur",
@@ -24,7 +23,6 @@ export default function RootLayout({
       </head>
       <body className="antialiased" style={{ background: "#F5F5F1", color: "#2D2424" }}>
         {children}
-        <VisualEditsMessenger />
       </body>
     </html>
   );
