@@ -75,7 +75,7 @@ function StatItem({ value, suffix, label }: { value: number; suffix: string; lab
   return (
     <div ref={ref}>
       <div className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 600, lineHeight: 1 }}>{count}{suffix}</div>
-      <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginTop: "0.4rem" }}>{label}</div>
+      <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginTop: "0.4rem" }}>{label}</div>
     </div>
   );
 }
@@ -90,34 +90,34 @@ function ContactSection() {
   };
 
   return (
-    <section id="contact-form" style={{ padding: "9rem 4rem", background: "var(--ink)", color: "var(--paper)" }} className="section-pad">
+    <section id="contact-form" style={{ padding: "9rem 4rem", background: "#121210", color: "#E8E8E2" }} className="section-pad">
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div className="reveal" style={{ marginBottom: "4rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,245,241,0.32)" }}>06 / Collaboration</span>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.32 }}>06 / Collaboration</span>
           <h2 className="font-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", marginTop: "1rem" }}>Initialize a <em>Partnership</em></h2>
         </div>
 
         {status === "sent" ? (
-          <div className="reveal" style={{ padding: "4rem", border: "1px solid rgba(245,245,241,0.1)", textAlign: "center" }}>
+          <div className="reveal" style={{ padding: "4rem", border: "1px solid var(--border-muted)", textAlign: "center" }}>
             <span className="font-script" style={{ fontSize: "2.5rem", display: "block", marginBottom: "1rem" }}>Received.</span>
-            <p className="font-sans" style={{ fontSize: "0.8rem", color: "rgba(245,245,241,0.5)", letterSpacing: "0.1em" }}>WE WILL REACH OUT WITHIN 24 HOURS.</p>
+            <p className="font-sans" style={{ fontSize: "0.8rem", color: "var(--paper)", opacity: 0.5, letterSpacing: "0.1em" }}>WE WILL REACH OUT WITHIN 24 HOURS.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="reveal" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
+          <form onSubmit={handleSubmit} className="reveal responsive-grid-2">
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>YOUR NAME</label>
-              <input required type="text" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem" }} />
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>YOUR NAME</label>
+              <input required type="text" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem" }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>EMAIL ADDRESS</label>
-              <input required type="email" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem" }} />
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>EMAIL ADDRESS</label>
+              <input required type="email" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem" }} />
             </div>
             <div style={{ gridColumn: "span 2", display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "1.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.4 }}>PROJECT VISION</label>
-              <textarea required rows={4} style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(245,245,241,0.2)", padding: "0.75rem 0", color: "#fff", outline: "none", fontSize: "1rem", resize: "none" }} />
+              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>PROJECT VISION</label>
+              <textarea required rows={4} style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem", resize: "none" }} />
             </div>
             <div style={{ gridColumn: "span 2", marginTop: "2rem" }}>
-              <button type="submit" className="btn-primary" style={{ background: "var(--paper)", color: "var(--ink)", width: "100%", justifyContent: "center" }}>
+              <button type="submit" className="btn-primary" style={{ background: "#E8E8E2", color: "#111", width: "100%", justifyContent: "center" }}>
                 {status === "sending" ? "TRANSMITTING..." : "SEND ENQUIRY"}
               </button>
             </div>
@@ -137,20 +137,20 @@ function CapabilitiesSection() {
   ];
 
   return (
-    <section id="services" style={{ padding: "9rem 4rem", background: "var(--paper)", borderBottom: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
+    <section id="services" style={{ padding: "9rem 4rem", background: "var(--paper)", borderBottom: "1px solid var(--border-muted)" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>03 / Capabilities</span>
-          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>03 / Capabilities</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
           <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Expertise</span>
         </div>
 
-        <div className="capabilities-grid" style={{ display: "grid", gap: "4rem 6rem" }}>
+        <div className="capabilities-grid reveal" style={{ display: "grid", gap: "4rem 6rem" }}>
           {services.map((s, i) => (
-            <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid rgba(45,36,36,0.04)" }}>
-              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "rgba(45,36,36,0.3)", display: "block", marginBottom: "1rem" }}>0{i+1} &mdash; CAPABILITY</span>
+            <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
+              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem" }}>0{i+1} &mdash; CAPABILITY</span>
               <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
-              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "rgba(45,36,36,0.6)", maxWidth: "420px" }}>{s.desc}</p>
+              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.6, maxWidth: "420px" }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -170,8 +170,8 @@ function TestimonialsSection() {
     <section id="testimonials" style={{ padding: "9rem 4rem", background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>05 / Testimonials</span>
-          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>05 / Testimonials</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
           <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
         </div>
 
@@ -179,15 +179,15 @@ function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div key={i} className={`reveal reveal-delay-${i + 1}`}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "rgba(45,36,36,0.4)" }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "var(--ink)", opacity: 0.4 }}>
                    {t.initial}
                 </div>
                 <div>
                   <h4 className="font-serif" style={{ fontSize: "1.1rem", lineHeight: 1 }}>{t.name}</h4>
-                  <p className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginTop: "0.2rem" }}>{t.role}</p>
+                  <p className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.3, marginTop: "0.2rem" }}>{t.role}</p>
                 </div>
               </div>
-              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "rgba(45,36,36,0.7)", fontStyle: "italic" }}>&ldquo;{t.text}&rdquo;</p>
+              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.7, fontStyle: "italic" }}>&ldquo;{t.text}&rdquo;</p>
             </div>
           ))}
         </div>
@@ -227,12 +227,13 @@ function Marquee({ dark = false }: { dark?: boolean }) {
   const doubled = [...items, ...items];
 
   return (
-    <div style={{ overflow: "hidden", padding: "1.25rem 0", borderTop: `1px solid ${dark ? "rgba(245,245,241,0.07)" : "rgba(45,36,36,0.06)"}`, borderBottom: `1px solid ${dark ? "rgba(245,245,241,0.07)" : "rgba(45,36,36,0.06)"}`, background: dark ? "transparent" : "transparent" }}>
+    <div style={{ overflow: "hidden", padding: "1.25rem 0", borderTop: `1px solid var(--border-muted)`, borderBottom: `1px solid var(--border-muted)`, background: "transparent" }}>
       <div className="marquee-track">
         {doubled.map((item, i) => (
           <span key={i} className="font-sans" style={{
             fontSize: "0.6rem", letterSpacing: "0.25em", textTransform: "uppercase",
-            color: dark ? "rgba(245,245,241,0.35)" : "rgba(45,36,36,0.35)",
+            color: "var(--ink)",
+            opacity: 0.35,
             padding: "0 2rem"
           }}>
             {item}
@@ -242,6 +243,8 @@ function Marquee({ dark = false }: { dark?: boolean }) {
     </div>
   );
 }
+
+import { ThemeToggle } from "@/components/theme-toggle";
 
 /* ─── NAVBAR ──────────────────────────────────────────────────────────── */
 function Navbar() {
@@ -259,26 +262,32 @@ function Navbar() {
   return (
     <>
       <nav className={`site-nav ${scrolled ? "scrolled" : ""}`} id="main-nav">
-        <a href="#hero" className="font-serif" style={{ fontSize: "1.2rem", fontWeight: 600, color: "var(--ink)", textDecoration: "none" }}>KS</a>
+        <div style={{ maxWidth: "1240px", margin: "0 auto", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 2rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+            <a href="#hero" className="font-serif site-nav-logo" style={{ fontSize: "1.2rem", fontWeight: 600, textDecoration: "none" }}>KS</a>
+          </div>
 
-        <div className="hidden md:flex items-center gap-10">
-          {links.map((l) => (
-            <a key={l} href={`#${l.toLowerCase()}`} className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, color: "var(--ink)", textDecoration: "none", opacity: 0.65, transition: "opacity 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
-            >{l}</a>
-          ))}
-        </div>
+          <div className="hidden md:flex items-center gap-10 nav-desktop-links">
+            {links.map((l) => (
+              <a key={l} href={`#${l.toLowerCase()}`} className="font-sans site-nav-link" style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, textDecoration: "none", transition: "opacity 0.2s" }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
+              >{l}</a>
+            ))}
+          </div>
 
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          <a href="mailto:kishanan@newborncinema.com" className="btn-ghost hidden md:inline-flex" id="nav-collaborate-btn">Collaborate</a>
-          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "none", padding: "0.5rem" }} aria-label="Toggle menu">
-            <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
-              {[0, 1, 2].map((n) => (
-                <span key={n} style={{ display: "block", height: "1px", background: "var(--ink)", transition: "all 0.3s", ...(n === 0 && menuOpen ? { transform: "rotate(45deg) translate(4px,4px)" } : n === 1 && menuOpen ? { opacity: 0 } : n === 2 && menuOpen ? { transform: "rotate(-45deg) translate(4px,-4px)" } : {}) }} />
-              ))}
-            </div>
-          </button>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <ThemeToggle />
+            <div style={{ width: "1px", height: "20px", background: "var(--ink)", opacity: 0.1, margin: "0 0.25rem" }} className="hidden md:block site-nav-divider" />
+            <a href="mailto:kishanan@newborncinema.com" className="btn-ghost hidden md:inline-flex site-nav-btn" id="nav-collaborate-btn">Collaborate</a>
+            <button className="md:hidden nav-mobile-hamburger" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", padding: "0.5rem" }} aria-label="Toggle menu">
+              <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
+                {[0, 1, 2].map((n) => (
+                  <span key={n} style={{ display: "block", height: "1px", background: "var(--ink)", transition: "all 0.3s", ...(n === 0 && menuOpen ? { transform: "rotate(45deg) translate(4px,4px)" } : n === 1 && menuOpen ? { opacity: 0 } : n === 2 && menuOpen ? { transform: "rotate(-45deg) translate(4px,-4px)" } : {}) }} />
+                ))}
+              </div>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -334,41 +343,43 @@ function HeroSection() {
       </div>
 
       {/* Editorial content — 42% */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "7rem 4rem 4rem", background: "var(--paper)" }}
-        className="section-pad">
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--paper)", borderLeft: "1px solid var(--border-muted)" }}
+        className="section-pad hero-editorial-column">
+        
+        <div id="hero-editorial-inner" style={{ width: "100%", maxWidth: "580px", paddingLeft: "4rem" }}>
+          <p className="font-sans reveal" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.42, marginBottom: "2rem" }}>
+            CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
+          </p>
 
-        <p className="font-sans reveal" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(45,36,36,0.42)", marginBottom: "2rem" }}>
-          CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
-        </p>
+          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
+            Filmmaker &amp;<br />Creative<br />Entrepreneur
+          </h1>
 
-        <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
-          Filmmaker &amp;<br />Creative<br />Entrepreneur
-        </h1>
+          <div className="font-script reveal reveal-delay-2" style={{ fontSize: "1.75rem", opacity: 0.35, marginBottom: "1.75rem" }}>
+            Crafting Cinematic Experiences
+          </div>
 
-        <div className="font-script reveal reveal-delay-2" style={{ fontSize: "1.75rem", opacity: 0.35, marginBottom: "1.75rem" }}>
-          Crafting Cinematic Experiences
-        </div>
+          <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
+            Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
+          </p>
 
-        <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "rgba(45,36,36,0.68)", maxWidth: "360px" }}>
-          Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
-        </p>
+          <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <a href="#work" className="btn-primary" id="hero-view-work-btn">View Latest Work</a>
+            <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="hero-collaborate-btn">Collaborate</a>
+          </div>
 
-        <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-          <a href="#work" className="btn-primary" id="hero-view-work-btn">View Latest Work</a>
-          <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="hero-collaborate-btn">Collaborate</a>
-        </div>
-
-        <div className="reveal reveal-delay-4" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.08)", display: "flex", gap: "2.5rem" }}>
-          {[{ n: 500, suffix: "+", l: "Productions" }, { n: 7, suffix: "+", l: "Years Active" }, { n: 2, suffix: "", l: "Ventures Founded" }].map((s) => (
-            <StatItem key={s.l} value={s.n} suffix={s.suffix} label={s.l} />
-          ))}
+          <div className="reveal reveal-delay-4 stat-grid-mobile" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border-muted)", display: "flex", gap: "2.5rem" }}>
+            {[{ n: 500, suffix: "+", l: "Productions" }, { n: 7, suffix: "+", l: "Years Active" }, { n: 2, suffix: "", l: "Ventures Founded" }].map((s) => (
+              <StatItem key={s.l} value={s.n} suffix={s.suffix} label={s.l} />
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
       <div style={{ position: "absolute", bottom: "2.5rem", right: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }} className="hidden md:flex">
         <div style={{ width: "1px", height: "50px", background: "var(--ink)", opacity: 0.18 }} />
-        <span className="font-sans" style={{ fontSize: "0.42rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(45,36,36,0.28)", writingMode: "vertical-rl" }}>Scroll</span>
+        <span className="font-sans" style={{ fontSize: "0.42rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.28, writingMode: "vertical-rl" }}>Scroll</span>
       </div>
     </section>
   );
@@ -379,11 +390,11 @@ function PhilosophySection() {
   return (
     <section id="philosophy" style={{ background: "var(--paper)" }}>
       <Marquee />
-      <div className="section-pad" style={{ padding: "9rem 4rem", borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
-        <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+      <div className="section-pad" style={{ borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
+        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
           <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>02 / Philosophy</span>
-            <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>02 / Philosophy</span>
+            <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
             <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Mindset</span>
           </div>
 
@@ -391,18 +402,18 @@ function PhilosophySection() {
             The Creative<br /><em>Philosophy</em>
           </h2>
 
-          <div className="philosophy-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem" }}>
-            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "rgba(45,36,36,0.78)" }}>
+          <div className="philosophy-grid">
+            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.78 }}>
               Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration — they are strategic coordinates engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story.
             </p>
-            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "rgba(45,36,36,0.78)" }}>
+            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.78 }}>
               Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move. Every cut is a narrative beat. We build creative ventures that resonate because they are built on architectural foundations of intent — not instinct alone.
             </p>
           </div>
 
           <div className="reveal" style={{ marginTop: "5rem", display: "flex", alignItems: "center", gap: "2rem" }}>
             <div style={{ height: "1px", width: "50px", background: "var(--ink)", opacity: 0.12 }} />
-            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(45,36,36,0.28)" }}>
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.28 }}>
               Crafting Cinematic Experiences &amp; Building Creative Ventures
             </span>
           </div>
@@ -431,8 +442,8 @@ function ImpactSection() {
   };
 
   return (
-    <section id="work" style={{ background: "var(--ink)", color: "var(--paper)", padding: "9rem 4rem" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+    <section id="work" style={{ background: "#0D0D0B", color: "#E8E8E2" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "1rem" }}>
           <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
             Selected<br />Productions
@@ -449,7 +460,7 @@ function ImpactSection() {
               onMouseLeave={() => setHovered(null)}
               onClick={() => toggleExpand(proj.id)}
             >
-              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid rgba(245,245,241,0.07)", position: "relative" }}>
+              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid var(--border-muted)", position: "relative" }}>
                 <Image
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
@@ -461,47 +472,47 @@ function ImpactSection() {
 
                 {/* Expand Indicator */}
                 <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered === proj.id && !expanded ? 1 : 0, transition: "opacity 0.3s" }}>
-                  <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", background: "rgba(0,0,0,0.6)", padding: "0.5rem 1rem", border: "1px solid rgba(255,255,255,0.2)" }}>VIEW DETAILS</span>
+                  <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", background: "rgba(0,0,0,0.6)", padding: "0.5rem 1rem", border: "1px solid rgba(255,255,255,0.2)", color: "#fff" }}>VIEW DETAILS</span>
                 </div>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
-                    <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--paper)", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id || expanded === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
+                    <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "inherit", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id || expanded === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
                       {proj.title}
                     </h3>
-                    <span style={{ fontSize: "0.42rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.15rem 0.35rem", border: "1px solid rgba(245,245,241,0.2)", borderRadius: "2px", color: "rgba(245,245,241,0.5)" }}>
+                    <span style={{ fontSize: "0.42rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.15rem 0.35rem", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "2px", color: "inherit", opacity: 0.5 }}>
                       {proj.badge}
                     </span>
                   </div>
-                  <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,245,241,0.36)" }}>
+                  <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "inherit", opacity: 0.36 }}>
                     {proj.cat}
                   </p>
 
                   {/* Expanded Content */}
                   <div style={{ height: expanded === proj.id ? "auto" : hovered === proj.id ? "40px" : "0", opacity: hovered === proj.id || expanded === proj.id ? 1 : 0, overflow: "hidden", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", marginTop: "0.75rem" }}>
-                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(245,245,241,0.52)", lineHeight: 1.6, marginBottom: "1rem" }}>
+                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "inherit", opacity: 0.52, lineHeight: 1.6, marginBottom: "1rem" }}>
                       {proj.desc}
                     </p>
                     {expanded === proj.id && (
-                      <div className="reveal" style={{ padding: "1.5rem", border: "1px solid rgba(245,245,241,0.06)", background: "rgba(245,245,241,0.02)" }}>
+                      <div className="reveal" style={{ padding: "1.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                           <div>
-                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "rgba(245,245,241,0.3)", display: "block", marginBottom: "0.25rem" }}>ROLE</span>
+                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>ROLE</span>
                             <span className="font-sans" style={{ fontSize: "0.58rem" }}>Lead Producer / Editor</span>
                           </div>
                           <div>
-                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "rgba(245,245,241,0.3)", display: "block", marginBottom: "0.25rem" }}>STATUS</span>
+                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>STATUS</span>
                             <span className="font-sans" style={{ fontSize: "0.58rem" }}>Released / Global</span>
                           </div>
                         </div>
-                        <button className="font-sans" style={{ marginTop: "1.5rem", fontSize: "0.52rem", border: "none", background: "none", color: "var(--paper)", borderBottom: "1px solid", padding: "0", cursor: "none" }}>EXPLORE CASE STUDY →</button>
+                        <button className="font-sans" style={{ marginTop: "1.5rem", fontSize: "0.52rem", border: "none", background: "none", color: "inherit", borderBottom: "1px solid", padding: "0", cursor: "none" }}>EXPLORE CASE STUDY →</button>
                       </div>
                     )}
                   </div>
                 </div>
-                <span className="font-sans" style={{ fontSize: "0.52rem", color: "rgba(245,245,241,0.2)", flexShrink: 0 }}>{proj.year}</span>
+                <span className="font-sans" style={{ fontSize: "0.52rem", color: "inherit", opacity: 0.2, flexShrink: 0 }}>{proj.year}</span>
               </div>
             </div>
           ))}
@@ -515,8 +526,8 @@ function ImpactSection() {
 /* ─── EVOLUTION ───────────────────────────────────────────────────────── */
 function EvolutionSection() {
   return (
-    <section id="evolution" style={{ padding: "9rem 4rem", background: "var(--paper)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+    <section id="evolution" style={{ background: "var(--paper)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "4rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>04 / Career Arc</span>
           <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
@@ -529,38 +540,38 @@ function EvolutionSection() {
 
         <div className="bento-grid">
           {/* Phase 1 */}
-          <div className="bento-card bento-phase-sm reveal" style={{ gridColumn: "span 4", background: "#E8E8DE", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
-            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "rgba(45,36,36,0.05)", lineHeight: 1 }}>01</span>
-            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginBottom: "0.7rem" }}>2019 — 2021</span>
+          <div className="bento-card bento-phase-sm span-4 reveal" style={{ background: "var(--card)", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
+            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>01</span>
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2019 — 2021</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Designer</h3>
-            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "rgba(45,36,36,0.58)" }}>Establishing laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.</p>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>Establishing laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.</p>
           </div>
 
           {/* CEO — Hero Bento */}
-          <div className="bento-card bento-ceo reveal reveal-delay-1" style={{ gridColumn: "span 8", gridRow: "span 2", background: "var(--ink)", color: "var(--paper)", padding: "4rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+          <div className="bento-card bento-ceo span-8 row-2 reveal reveal-delay-1" style={{ background: "var(--ink)", color: "var(--paper)", padding: "4rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
             <div className="font-script" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
               Building Ventures
             </div>
-            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,245,241,0.38)", marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.38, marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
             <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
               Newborn Cinema<br />&amp; SunDawn Eventz
             </h3>
-            <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.8, color: "rgba(245,245,241,0.65)", marginBottom: "2.5rem" }}>
+            <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.8, color: "var(--paper)", opacity: 0.65, marginBottom: "2.5rem" }}>
               Transitioning a decade of craft into institutional leadership — founding and scaling South Asian creative ventures that redefine how regional narratives reach global audiences.
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <a href="#work" className="btn-primary" id="evo-view-work-btn" style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--paper)" }}>View Latest Work</a>
-              <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "rgba(245,245,241,0.28)", color: "var(--paper)" }}>Collaborate</a>
+              <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "var(--border-muted)", color: "var(--paper)" }}>Collaborate</a>
             </div>
-            <span className="font-serif" style={{ position: "absolute", bottom: "1.5rem", right: "2.5rem", fontSize: "7rem", color: "rgba(245,245,241,0.04)", lineHeight: 1 }}>03</span>
+            <span className="font-serif" style={{ position: "absolute", bottom: "1.5rem", right: "2.5rem", fontSize: "7rem", color: "var(--paper)", opacity: 0.04, lineHeight: 1 }}>03</span>
           </div>
 
           {/* Phase 2 */}
-          <div className="bento-card bento-phase-sm reveal reveal-delay-2" style={{ gridColumn: "span 4", background: "#DEDECE", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
-            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "rgba(45,36,36,0.05)", lineHeight: 1 }}>02</span>
-            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", marginBottom: "0.7rem" }}>2021 — 2025</span>
+          <div className="bento-card bento-phase-sm span-4 reveal reveal-delay-2" style={{ background: "var(--card)", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
+            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>02</span>
+            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2021 — 2025</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Editor</h3>
-            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "rgba(45,36,36,0.58)" }}>500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
           </div>
         </div>
       </div>
@@ -579,8 +590,8 @@ function Footer() {
   };
 
   return (
-    <footer id="contact" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", padding: "7rem 4rem 3rem" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+    <footer id="contact" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", paddingTop: "7rem" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "5rem 0", marginBottom: "6rem", borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
           <span className="font-script" style={{ fontSize: "2rem", opacity: 0.26, marginBottom: "1.5rem" }}>Let&apos;s create</span>
           <h2 className="font-serif" style={{ fontSize: "clamp(3.5rem, 7vw, 8rem)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "2.5rem" }}>
@@ -592,7 +603,7 @@ function Footer() {
         <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3rem" }}>
           <div>
             <h3 className="font-serif" style={{ fontSize: "1.4rem", marginBottom: "1.25rem" }}>Kishanan S.</h3>
-            <div className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.38)", lineHeight: 2.4 }}>
+            <div className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, lineHeight: 2.4 }}>
               Filmmaker &amp; Creative CEO<br />Newborn Cinema<br />SunDawn Eventz<br />© 2026
             </div>
           </div>
@@ -628,12 +639,12 @@ function Footer() {
           </div>
 
           <div>
-            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Insights</h5>
-            <p className="font-sans" style={{ fontSize: "0.72rem", lineHeight: 1.7, color: "rgba(45,36,36,0.48)", marginBottom: "1.25rem" }}>Dispatches on craft, leadership, and cinematic thinking.</p>
+            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.3, marginBottom: "1.5rem" }}>Insights</h5>
+            <p className="font-sans" style={{ fontSize: "0.72rem", lineHeight: 1.7, color: "var(--ink)", opacity: 0.48, marginBottom: "1.25rem" }}>Dispatches on craft, leadership, and cinematic thinking.</p>
             {submitted ? (
-              <p className="font-sans" style={{ fontSize: "0.72rem", color: "rgba(45,36,36,0.65)", fontStyle: "italic" }}>Thank you — you&apos;ll hear from us soon.</p>
+              <p className="font-sans" style={{ fontSize: "0.72rem", color: "var(--ink)", opacity: 0.65, fontStyle: "italic" }}>Thank you — you&apos;ll hear from us soon.</p>
             ) : (
-              <form onSubmit={handleSubscribe} style={{ position: "relative", borderBottom: "1px solid rgba(45,36,36,0.4)" }}>
+              <form onSubmit={handleSubscribe} style={{ position: "relative", borderBottom: "1px solid var(--border-muted)" }}>
                 <input id="newsletter-email" type="email" placeholder="YOUR EMAIL ADDRESS" value={email} onChange={(e) => setEmail(e.target.value)} required
                   style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontFamily: "Poppins, sans-serif", fontSize: "0.56rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink)", paddingBottom: "0.7rem", cursor: "none" }}
                 />
@@ -644,8 +655,8 @@ function Footer() {
         </div>
 
         <div style={{ marginTop: "4.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.2)", fontStyle: "italic" }}>Crafting Cinematic Experiences &amp; Building Creative Ventures.</span>
-          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(45,36,36,0.2)" }}>All Rights Reserved</span>
+          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.2, fontStyle: "italic" }}>Crafting Cinematic Experiences &amp; Building Creative Ventures.</span>
+          <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.2 }}>All Rights Reserved</span>
         </div>
       </div>
     </footer>
