@@ -183,8 +183,23 @@ body:has(button:hover) #cursor-ring {
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
-@media (max-width: 900px) { .triptych-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
-@media (max-width: 580px) { .triptych-grid { grid-template-columns: 1fr; } }
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { 
+  .triptych-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .capabilities-grid { grid-template-columns: 1fr; }
+  .testimonial-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 580px) { 
+  .triptych-grid { grid-template-columns: 1fr; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+}
 
 /* ─── BENTO ──────────────────────────────────────────────────────────── */
 .bento-grid {

@@ -128,11 +128,42 @@ function ContactSection() {
   );
 }
 
+function CapabilitiesSection() {
+  const services = [
+    { title: "Cinematic Production", desc: "Crafting feature narratives and high-fidelity commercials with architectural precision.", icons: ["Film", "Direction"] },
+    { title: "Creative Strategy", desc: "Institutional leadership and scaling South Asian creative ventures for global audiences.", icons: ["Vision", "Strategy"] },
+    { title: "Post-Production", desc: "Mastering narrative rhythm and the discipline of decisive editing for 500+ productions.", icons: ["Edit", "Pacing"] },
+    { title: "Luxury Experience", desc: "Engineering high-end events and immersive physical narratives for global brands.", icons: ["Events", "Design"] }
+  ];
+
+  return (
+    <section id="services" style={{ padding: "9rem 4rem", background: "var(--paper)", borderBottom: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto" }}>
+        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>03 / Capabilities</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
+          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Expertise</span>
+        </div>
+
+        <div className="capabilities-grid" style={{ display: "grid", gap: "4rem 6rem" }}>
+          {services.map((s, i) => (
+            <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid rgba(45,36,36,0.04)" }}>
+              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "rgba(45,36,36,0.3)", display: "block", marginBottom: "1rem" }}>0{i+1} &mdash; CAPABILITY</span>
+              <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
+              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "rgba(45,36,36,0.6)", maxWidth: "420px" }}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function TestimonialsSection() {
   const testimonials = [
-    { name: "Arjun R.", role: "Producer, South Asia Films", text: "Kishanan brings a rare architectural precision to storytelling. He doesn't just cut frames; he engineers emotional arcs." },
-    { name: "Sarah J.", role: "CEO, Lux Brand Group", text: "The SunDawn Gala was a masterclass in production. Every detail felt deliberate, cinematic, and perfectly aligned with our brand's vision." },
-    { name: "Thiru V.", role: "Director, Heritage Arts", text: "His commitment to narrative depth is unparalleled. Kishanan is the bridge between traditional culture and modern global cinema." }
+    { name: "Arjun R.", role: "Producer, South Asian Films", text: "Kishanan brings a rare architectural precision to storytelling. He doesn't just cut frames; he engineers emotional arcs.", initial: "A" },
+    { name: "Sarah J.", role: "CEO, Lux Brand Group", text: "The SunDawn Gala was a masterclass in production. Every detail felt deliberate, cinematic, and perfectly aligned with our brand's vision.", initial: "S" },
+    { name: "Thiru V.", role: "Director, Heritage Arts", text: "His commitment to narrative depth is unparalleled. Kishanan is the bridge between traditional culture and modern global cinema.", initial: "T" }
   ];
 
   return (
@@ -144,13 +175,19 @@ function TestimonialsSection() {
           <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
         </div>
 
-        <div className="testimonial-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4rem" }}>
+        <div className="testimonial-grid" style={{ display: "grid", gap: "4rem" }}>
           {testimonials.map((t, i) => (
             <div key={i} className={`reveal reveal-delay-${i + 1}`}>
-              <span className="font-serif" style={{ fontSize: "3rem", color: "rgba(45,36,36,0.1)", display: "block", marginBottom: "-1.5rem" }}>&ldquo;</span>
-              <p className="font-sans" style={{ fontSize: "1rem", lineHeight: 1.8, color: "rgba(45,36,36,0.75)", marginBottom: "2rem", fontStyle: "italic" }}>{t.text}</p>
-              <h4 className="font-serif" style={{ fontSize: "1.2rem", marginBottom: "0.2rem" }}>{t.name}</h4>
-              <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(45,36,36,0.35)" }}>{t.role}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "rgba(45,36,36,0.4)" }}>
+                   {t.initial}
+                </div>
+                <div>
+                  <h4 className="font-serif" style={{ fontSize: "1.1rem", lineHeight: 1 }}>{t.name}</h4>
+                  <p className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginTop: "0.2rem" }}>{t.role}</p>
+                </div>
+              </div>
+              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "rgba(45,36,36,0.7)", fontStyle: "italic" }}>&ldquo;{t.text}&rdquo;</p>
             </div>
           ))}
         </div>
@@ -638,6 +675,7 @@ export default function Home() {
       <main>
         <HeroSection />
         <PhilosophySection />
+        <CapabilitiesSection />
         <ImpactSection />
         <EvolutionSection />
         <TestimonialsSection />
