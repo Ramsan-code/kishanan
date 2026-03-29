@@ -62,53 +62,8 @@ function StatItem({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-function ContactSection() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("sending");
-    setTimeout(() => setStatus("sent"), 1500);
-  };
 
-  return (
-    <section id="contact-form" style={{ background: "#121210", color: "#E8E8E2" }} className="section-pad">
-      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 2rem" }}>
-        <div className="reveal" style={{ marginBottom: "4rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.32 }}>06 / Collaboration</span>
-          <h2 className="font-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", marginTop: "1rem" }}>Initialize a <em>Partnership</em></h2>
-        </div>
-
-        {status === "sent" ? (
-          <div className="reveal" style={{ padding: "4rem", border: "1px solid var(--border-muted)", textAlign: "center" }}>
-            <span className="font-script" style={{ fontSize: "2.5rem", display: "block", marginBottom: "1rem" }}>Received.</span>
-            <p className="font-sans" style={{ fontSize: "0.8rem", color: "var(--paper)", opacity: 0.5, letterSpacing: "0.1em" }}>WE WILL REACH OUT WITHIN 24 HOURS.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="reveal responsive-grid-2">
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>YOUR NAME</label>
-              <input required type="text" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem" }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>EMAIL ADDRESS</label>
-              <input required type="email" style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem" }} />
-            </div>
-            <div style={{ gridColumn: "span 2", display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "1.5rem" }}>
-              <label className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.2em", opacity: 0.6 }}>PROJECT VISION</label>
-              <textarea required rows={4} style={{ background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "#E8E8E2", outline: "none", fontSize: "1rem", resize: "none" }} />
-            </div>
-            <div style={{ gridColumn: "span 2", marginTop: "2rem" }}>
-              <button type="submit" className="btn-primary" style={{ background: "#E8E8E2", color: "#111", width: "100%", justifyContent: "center" }}>
-                {status === "sending" ? "TRANSMITTING..." : "SEND ENQUIRY"}
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-    </section>
-  );
-}
 
 function CapabilitiesSection() {
   const services = [
@@ -227,6 +182,89 @@ function Marquee({ dark = false }: { dark?: boolean }) {
 }
 
 import { ThemeToggle } from "@/components/theme-toggle";
+
+/* ─── FLOATING SOCIAL SIDEBAR ─────────────────────────────────────────── */
+function SocialSidebar() {
+  const socials = [
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+        </svg>
+      ),
+    },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+          <rect x="2" y="9" width="4" height="12"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+      ),
+    },
+    {
+      name: "Vimeo",
+      href: "https://vimeo.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
+          <path d="M22 7.42c-.09 2.01-1.49 4.76-4.2 8.26C15 19.36 12.6 21 10.57 21c-1.3 0-2.39-1.2-3.28-3.6L5.7 12.1C5.04 9.7 4.33 8.5 3.57 8.5c-.16 0-.73.34-1.7 1.02L1 8.34a54.86 54.86 0 003.35-2.98C5.85 4.04 7 3.27 7.77 3.2c1.83-.17 2.96.98 3.37 3.46.45 2.67.76 4.32.94 4.96.52 2.37 1.1 3.55 1.73 3.55.49 0 1.22-.77 2.2-2.32.97-1.55 1.5-2.73 1.56-3.55.14-1.34-.39-2.02-1.56-2.02-.55 0-1.13.13-1.72.37 1.14-3.74 3.32-5.56 6.53-5.44 2.38.08 3.5 1.61 3.38 4.61z"/>
+        </svg>
+      ),
+    },
+    {
+      name: "Fiverr",
+      href: "https://www.fiverr.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "1.1rem", height: "1.1rem" }}>
+          <path d="M21.07 0H2.93C1.31 0 0 1.31 0 2.93v18.14C0 22.69 1.31 24 2.93 24h18.14C22.69 24 24 22.69 24 21.07V2.93C24 1.31 22.69 0 21.07 0zm-6.86 18.55h-2.71v-7.4H9.79V18.55H7.08V8.71h7.13v9.84zm.86-11.44c0 .86-.7 1.56-1.56 1.56s-1.56-.7-1.56-1.56.7-1.56 1.56-1.56 1.56.7 1.56 1.56z"/>
+        </svg>
+      ),
+    },
+    {
+      name: "Email",
+      href: "mailto:kishanan@newborncinema.com",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      ),
+    },
+  ];
+
+  return (
+    <div className="social-sidebar">
+      {/* Top raised line */}
+      <div className="social-sidebar-line" />
+
+      {/* Icon stack */}
+      <div className="social-sidebar-icons">
+        {socials.map((s) => (
+          <a
+            key={s.name}
+            href={s.href}
+            target={s.href.startsWith("mailto") ? "_self" : "_blank"}
+            rel="noopener noreferrer"
+            aria-label={s.name}
+            className="social-sidebar-btn"
+          >
+            {s.icon}
+            <span className="social-sidebar-tooltip">{s.name}</span>
+          </a>
+        ))}
+      </div>
+
+      {/* Bottom raised line */}
+      <div className="social-sidebar-line" />
+    </div>
+  );
+}
 
 /* ─── NAVBAR ──────────────────────────────────────────────────────────── */
 function Navbar() {
@@ -439,13 +477,15 @@ function ImpactSection() {
               style={{ cursor: "none" }}
               onMouseEnter={() => setHovered(proj.id)}
               onMouseLeave={() => setHovered(null)}
+              onTouchStart={() => setHovered(proj.id)}
+              onTouchEnd={() => setHovered(null)}
               onClick={() => toggleExpand(proj.id)}
             >
               <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid var(--border-muted)", position: "relative" }}>
                 <Image
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
-                  style={{ objectFit: "cover", filter: hovered === proj.id || expanded === proj.id ? "grayscale(0)" : "grayscale(0.75)" }}
+                  style={{ objectFit: "cover", filter: hovered === proj.id || expanded === proj.id ? "grayscale(0) contrast(1.05)" : "grayscale(0.85)", transition: "filter 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)" }}
                 />
                 {/* Letterbox bars */}
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
@@ -739,6 +779,7 @@ export default function Home() {
       {/* Cinematic intro */}
       {introVisible && <Intro onDone={doneCallback} />}
 
+      <SocialSidebar />
       <Navbar />
       <main>
         <HeroSection />
@@ -748,7 +789,7 @@ export default function Home() {
         <EvolutionSection />
         <SunDawnSection />
         <TestimonialsSection />
-        <ContactSection />
+
         <Footer />
       </main>
     </>

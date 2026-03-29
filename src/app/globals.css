@@ -410,5 +410,91 @@ nav.site-nav.scrolled {
   .sundawn-stats-grid { grid-template-columns: 1fr !important; }
 }
 
+/* ─── FLOATING SOCIAL BAR (horizontal row) ──────────────────────────── */
+.social-sidebar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.social-sidebar-line {
+  width: 60px;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.18;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.social-sidebar-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.1rem;
+  pointer-events: all;
+  padding: 0 0.75rem;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-muted);
+  border-radius: 100px;
+}
+
+.social-sidebar-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--ink);
+  opacity: 0.42;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease;
+  cursor: pointer;
+}
+.social-sidebar-btn:hover {
+  opacity: 1;
+  transform: translateY(-4px) scale(1.15);
+  background: var(--ghost);
+}
+
+/* Tooltip above the icon */
+.social-sidebar-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.65rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.45rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.social-sidebar-btn:hover .social-sidebar-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Hide on small screens */
+@media (max-width: 640px) {
+  .social-sidebar { display: none !important; }
+}
+
 /* Hide Next.js error overlay */
 nextjs-portal { display: none !important; }
