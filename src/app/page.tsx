@@ -97,9 +97,9 @@ function CapabilitiesSection() {
 
 function TestimonialsSection() {
   const testimonials = [
-    { name: "Arjun R.", role: "Producer, South Asian Films", text: "Kishanan brings a rare architectural precision to storytelling. He doesn't just cut frames; he engineers emotional arcs.", initial: "A" },
-    { name: "Sarah J.", role: "CEO, Lux Brand Group", text: "The SunDawn Gala was a masterclass in production. Every detail felt deliberate, cinematic, and perfectly aligned with our brand's vision.", initial: "S" },
-    { name: "Thiru V.", role: "Director, Heritage Arts", text: "His commitment to narrative depth is unparalleled. Kishanan is the bridge between traditional culture and modern global cinema.", initial: "T" }
+    { name: "", role: "", text: "", initial: "A" },
+    { name: "", role: "", text: ".", initial: "S" },
+    { name: "", role: "", text: "", initial: "T" }
   ];
 
   return (
