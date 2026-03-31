@@ -79,7 +79,6 @@ function CapabilitiesSection() {
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>03 / Capabilities</span>
           <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
-          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Expertise</span>
         </div>
 
         <div className="capabilities-grid reveal" style={{ display: "grid", gap: "4rem 6rem" }}>
@@ -109,7 +108,6 @@ function TestimonialsSection() {
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>06 / Testimonials</span>
           <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
-          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>Social Proof</span>
         </div>
 
         <div className="testimonial-grid" style={{ display: "grid", gap: "3rem" }}>
@@ -208,15 +206,7 @@ function SocialSidebar() {
         </svg>
       ),
     },
-    {
-      name: "Vimeo",
-      href: "https://vimeo.com",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <path d="M22 7.42c-.09 2.01-1.49 4.76-4.2 8.26C15 19.36 12.6 21 10.57 21c-1.3 0-2.39-1.2-3.28-3.6L5.7 12.1C5.04 9.7 4.33 8.5 3.57 8.5c-.16 0-.73.34-1.7 1.02L1 8.34a54.86 54.86 0 003.35-2.98C5.85 4.04 7 3.27 7.77 3.2c1.83-.17 2.96.98 3.37 3.46.45 2.67.76 4.32.94 4.96.52 2.37 1.1 3.55 1.73 3.55.49 0 1.22-.77 2.2-2.32.97-1.55 1.5-2.73 1.56-3.55.14-1.34-.39-2.02-1.56-2.02-.55 0-1.13.13-1.72.37 1.14-3.74 3.32-5.56 6.53-5.44 2.38.08 3.5 1.61 3.38 4.61z"/>
-        </svg>
-      ),
-    },
+ 
     {
       name: "Fiverr",
       href: "https://www.fiverr.com",
@@ -352,7 +342,7 @@ function HeroSection() {
 
         {/* Thread */}
         <div className="font-script" style={{ position: "absolute", bottom: "80px", right: "2.5rem", zIndex: 15, fontSize: "3rem", opacity: 0.5, color: "#fff", transform: "rotate(-8deg)", textShadow: "0 2px 24px rgba(0,0,0,0.6)" }}>
-          Visionary
+          Newborn Cinema
         </div>
 
         {/* Caption */}
@@ -374,9 +364,7 @@ function HeroSection() {
             Filmmaker &amp;<br />Creative<br />Entrepreneur
           </h1>
 
-          <div className="font-script reveal reveal-delay-2" style={{ fontSize: "1.75rem", opacity: 0.35, marginBottom: "1.75rem" }}>
-            Crafting Cinematic Experiences
-          </div>
+         
 
           <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
             Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
@@ -414,7 +402,6 @@ function PhilosophySection() {
           <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
             <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>02 / Philosophy</span>
             <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
-            <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Mindset</span>
           </div>
 
           <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.8rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4.5rem" }}>
@@ -467,7 +454,6 @@ function ImpactSection() {
           <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
             Selected<br />Productions
           </h2>
-          <span className="font-script" style={{ fontSize: "2.2rem", opacity: 0.3 }}>Cinematic Vision</span>
         </div>
 
         <div className="triptych-grid">
@@ -552,7 +538,6 @@ function EvolutionSection() {
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "4rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>04 / Career Arc</span>
           <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
-          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.22 }}>The Thread</span>
         </div>
 
         <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4rem" }}>
@@ -624,7 +609,6 @@ function SunDawnSection() {
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "#E8E8E2", opacity: 0.32, whiteSpace: "nowrap" }}>05 / SunDawn Eventz</span>
           <div style={{ height: "1px", flexGrow: 1, background: "rgba(232,232,226,0.08)" }} />
-          <span className="font-script" style={{ fontSize: "1.75rem", opacity: 0.2, color: "#E8E8E2" }}>The Venture</span>
         </div>
 
         {/* Title + Intro */}
@@ -674,10 +658,7 @@ function SunDawnSection() {
         </div>
 
         {/* CTA */}
-        <div className="reveal reveal-delay-3" style={{ borderTop: "1px solid rgba(232,232,226,0.08)", paddingTop: "3rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem" }}>
-          <p className="font-serif" style={{ fontSize: "1.35rem", opacity: 0.55, fontStyle: "italic" }}>Ready to create something extraordinary?</p>
-          <a href="#contact-form" className="btn-primary" id="sundawn-cta-btn" style={{ background: "#E8E8E2", color: "#0D0D0B", borderColor: "#E8E8E2" }}>Plan Your Event</a>
-        </div>
+       
 
       </div>
     </section>
@@ -708,7 +689,7 @@ function Footer() {
           <div>
             <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Platform</h5>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {["Work", "Philosophy", "Evolution", "Archives"].map((l) => (
+              {["Work", "Philosophy", "Evolution"].map((l) => (
                 <li key={l}><a href={`#${l.toLowerCase()}`} className="font-sans" style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
@@ -724,7 +705,6 @@ function Footer() {
                 { label: "Fiverr", href: "https://www.fiverr.com" },
                 { label: "LinkedIn", href: "https://www.linkedin.com" },
                 { label: "Instagram", href: "https://www.instagram.com" },
-                { label: "Vimeo", href: "https://vimeo.com" },
               ].map((s) => (
                 <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="font-sans"
                   style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
@@ -735,20 +715,7 @@ function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.3, marginBottom: "1.5rem" }}>Insights</h5>
-            <p className="font-sans" style={{ fontSize: "0.72rem", lineHeight: 1.7, color: "var(--ink)", opacity: 0.48, marginBottom: "1.25rem" }}>Dispatches on craft, leadership, and cinematic thinking.</p>
-            {submitted ? (
-              <p className="font-sans" style={{ fontSize: "0.72rem", color: "var(--ink)", opacity: 0.65, fontStyle: "italic" }}>Thank you — you&apos;ll hear from us soon.</p>
-            ) : (
-              <form onSubmit={handleSubscribe} style={{ position: "relative", borderBottom: "1px solid var(--border-muted)" }}>
-                <input id="newsletter-email" type="email" placeholder="YOUR EMAIL ADDRESS" value={email} onChange={(e) => setEmail(e.target.value)} required
-                  style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontFamily: "Poppins, sans-serif", fontSize: "0.56rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink)", paddingBottom: "0.7rem", cursor: "none" }}
-                />
-                <button type="submit" style={{ position: "absolute", right: 0, bottom: "0.5rem", fontSize: "0.55rem", letterSpacing: "0.15em", fontWeight: 700, background: "transparent", border: "none", cursor: "none", color: "var(--ink)" }}>→</button>
-              </form>
-            )}
-          </div>
+      
         </div>
 
         <div style={{ marginTop: "4.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
