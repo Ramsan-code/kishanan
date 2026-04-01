@@ -78,7 +78,7 @@ export function ContactSection() {
             <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
               <div>
                 <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.3, display: "block", marginBottom: "0.5rem" }}>Direct Email</span>
-                <a href="mailto:kishanan@newborncinema.com" className="font-serif" style={{ fontSize: "1.4rem", color: "var(--ink)", textDecoration: "none", borderBottom: "1px solid var(--border-muted)" }}>kishanan@newborncinema.com</a>
+                <a href="mailto:shankishan2212@gmail.com" className="font-serif" style={{ fontSize: "1.4rem", color: "var(--ink)", textDecoration: "none", borderBottom: "1px solid var(--border-muted)" }}>shankishan2212@gmail.com</a>
               </div>
             </div>
           </div>
