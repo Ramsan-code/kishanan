@@ -76,7 +76,7 @@ function CapabilitiesSection() {
         <div className="capabilities-grid reveal" style={{ display: "grid", gap: "4rem 6rem" }}>
           {services.map((s, i) => (
             <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
-              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem" }}>0{i+1} &mdash; CAPABILITY</span>
+              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem" }}>0{i + 1} &mdash; CAPABILITY</span>
               <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
               <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.6, maxWidth: "420px" }}>{s.desc}</p>
             </div>
@@ -123,9 +123,9 @@ function SocialSidebar() {
       href: "https://www.instagram.com",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none" />
         </svg>
       ),
     },
@@ -134,19 +134,19 @@ function SocialSidebar() {
       href: "https://www.linkedin.com",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
-          <rect x="2" y="9" width="4" height="12"/>
-          <circle cx="4" cy="4" r="2"/>
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
         </svg>
       ),
     },
- 
+
     {
       name: "Fiverr",
       href: "https://www.fiverr.com",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <path d="M21.07 0H2.93C1.31 0 0 1.31 0 2.93v18.14C0 22.69 1.31 24 2.93 24h18.14C22.69 24 24 22.69 24 21.07V2.93C24 1.31 22.69 0 21.07 0zm-6.86 18.55h-2.71v-7.4H9.79V18.55H7.08V8.71h7.13v9.84zm.86-11.44c0 .86-.7 1.56-1.56 1.56s-1.56-.7-1.56-1.56.7-1.56 1.56-1.56 1.56.7 1.56 1.56z"/>
+          <path d="M21.07 0H2.93C1.31 0 0 1.31 0 2.93v18.14C0 22.69 1.31 24 2.93 24h18.14C22.69 24 24 22.69 24 21.07V2.93C24 1.31 22.69 0 21.07 0zm-6.86 18.55h-2.71v-7.4H9.79V18.55H7.08V8.71h7.13v9.84zm.86-11.44c0 .86-.7 1.56-1.56 1.56s-1.56-.7-1.56-1.56.7-1.56 1.56-1.56 1.56.7 1.56 1.56z" />
         </svg>
       ),
     },
@@ -155,8 +155,8 @@ function SocialSidebar() {
       href: "mailto:shankishan2212@gmail.com",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-          <polyline points="22,6 12,13 2,6"/>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" />
         </svg>
       ),
     },
@@ -291,7 +291,7 @@ function HeroSection() {
       {/* Editorial content — 42% */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--paper)", borderLeft: "1px solid var(--border-muted)" }}
         className="section-pad hero-editorial-column">
-        
+
         <div id="hero-editorial-inner" style={{ width: "100%", maxWidth: "580px", paddingLeft: "4rem" }}>
           <p className="font-sans reveal" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.42, marginBottom: "2rem" }}>
             CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
@@ -301,7 +301,7 @@ function HeroSection() {
             Filmmaker &amp;<br />Creative<br />Entrepreneur
           </h1>
 
-         
+
 
           <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
             Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
@@ -595,7 +595,7 @@ function SunDawnSection() {
         </div>
 
         {/* CTA */}
-       
+
 
       </div>
     </section>
@@ -646,7 +646,7 @@ function Footer() {
             </ul>
           </div>
 
-      
+
         </div>
 
         <div style={{ marginTop: "4.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(45,36,36,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
