@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState, useRef, useCallback, RefObject } from "react";
+import { ContactSection } from "@/components/contact-section";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
 function useReveal() {
@@ -267,7 +269,12 @@ function Navbar() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  const links = ["Philosophy", "Work", "Evolution", "Contact"];
+  const links = [
+    { label: "Philosophy", href: "#philosophy" },
+    { label: "Work", href: "#work" },
+    { label: "Evolution", href: "#evolution" },
+    { label: "Contact", href: "#contact" }
+  ];
 
   return (
     <>
@@ -279,10 +286,10 @@ function Navbar() {
 
           <div className="hidden md:flex items-center gap-10 nav-desktop-links">
             {links.map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} className="font-sans site-nav-link" style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, textDecoration: "none", transition: "opacity 0.2s" }}
+              <Link key={l.label} href={l.href} className="font-sans site-nav-link" style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500, textDecoration: "none", transition: "opacity 0.2s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
-              >{l}</a>
+              >{l.label}</Link>
             ))}
           </div>
 
@@ -303,9 +310,9 @@ function Navbar() {
       {/* Mobile full-screen menu */}
       <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 900, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", transition: "opacity 0.3s ease, visibility 0.3s ease", opacity: menuOpen ? 1 : 0, visibility: menuOpen ? "visible" : "hidden" }}>
         {links.map((l) => (
-          <a key={l} href={`#${l.toLowerCase()}`} className="font-serif" onClick={() => setMenuOpen(false)} style={{ fontSize: "2.8rem", color: "var(--ink)", textDecoration: "none", fontWeight: 500, opacity: 0.85 }}>{l}</a>
+          <Link key={l.label} href={l.href} className="font-serif" onClick={() => setMenuOpen(false)} style={{ fontSize: "2.8rem", color: "var(--ink)", textDecoration: "none", fontWeight: 500, opacity: 0.85 }}>{l.label}</Link>
         ))}
-        <a href="mailto:kishanan@newborncinema.com" className="btn-primary" style={{ marginTop: "1rem" }}>Collaborate</a>
+        <Link href="#contact" className="btn-primary" onClick={() => setMenuOpen(false)} style={{ marginTop: "1rem" }}>Collaborate</Link>
       </div>
     </>
   );
@@ -372,7 +379,7 @@ function HeroSection() {
 
           <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <a href="#work" className="btn-primary" id="hero-view-work-btn">View Latest Work</a>
-            <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="hero-collaborate-btn">Collaborate</a>
+            <Link href="#contact" className="btn-ghost" id="hero-collaborate-btn">Collaborate</Link>
           </div>
 
           <div className="reveal reveal-delay-4 stat-grid-mobile" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border-muted)", display: "flex", gap: "2.5rem" }}>
@@ -567,7 +574,7 @@ function EvolutionSection() {
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <a href="#work" className="btn-primary" id="evo-view-work-btn" style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--paper)" }}>View Latest Work</a>
-              <a href="mailto:kishanan@newborncinema.com" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "var(--border-muted)", color: "var(--paper)" }}>Collaborate</a>
+              <Link href="#contact" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "var(--border-muted)", color: "var(--paper)" }}>Collaborate</Link>
             </div>
             <span className="font-serif" style={{ position: "absolute", bottom: "1.5rem", right: "2.5rem", fontSize: "7rem", color: "var(--paper)", opacity: 0.04, lineHeight: 1 }}>03</span>
           </div>
@@ -676,7 +683,7 @@ function Footer() {
   };
 
   return (
-    <footer id="contact" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", paddingTop: "7rem" }} className="section-pad">
+    <footer id="footer" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", paddingTop: "7rem" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3rem" }}>
           <div>
@@ -756,7 +763,7 @@ export default function Home() {
         <EvolutionSection />
         <SunDawnSection />
         <TestimonialsSection />
-
+        <ContactSection />
         <Footer />
       </main>
     </>
