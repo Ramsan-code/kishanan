@@ -110,59 +110,6 @@ body:has(button:hover) #cursor-ring {
   transform-origin: left;
 }
 
-/* ─── SCREEN WIPE INTRO ──────────────────────────────────────────────── */
-#intro-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 7000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--ink);
-  overflow: hidden;
-}
-#intro-overlay .intro-logo {
-  font-family: 'Cormorant Infant', serif;
-  color: var(--paper);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: introFadeUp 0.6s 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
-}
-#intro-overlay .intro-sub {
-  font-family: 'Luxurious Script', cursive;
-  color: var(--paper);
-  font-size: 1.6rem;
-  opacity: 0;
-  margin-top: 0.5rem;
-  animation: introFadeUp 0.6s 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
-}
-#intro-overlay .intro-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: var(--paper);
-  opacity: 0.25;
-  width: 0%;
-  animation: introBarGrow 1.2s 0.5s ease-out forwards;
-}
-#intro-overlay.hide {
-  animation: introSlideUp 0.8s 2.2s cubic-bezier(0.76,0,0.24,1) forwards;
-}
-@keyframes introFadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes introBarGrow {
-  to { width: 100%; opacity: 0.25; }
-}
-@keyframes introSlideUp {
-  to { transform: translateY(-100%); }
-}
-
 /* ─── TYPOGRAPHY ─────────────────────────────────────────────────────── */
 .font-serif  { font-family: 'Cormorant Infant', serif; }
 .font-script { font-family: 'Luxurious Script', cursive; }
@@ -268,18 +215,20 @@ body:has(button:hover) #cursor-ring {
 nav.site-nav {
   position: fixed; top: 0; left: 0; width: 100%;
   z-index: 1000; padding: 1.5rem 0;
-  display: flex; justify-content: center; align-items: center;
-  transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+  display: flex; align-items: center;
+  transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease, border 0.4s ease;
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-muted);
 }
 /* Universal Blend Mode Visibility at Top (excluding theme toggle) */
 nav.site-nav:not(.scrolled) .site-nav-link,
 nav.site-nav:not(.scrolled) .site-nav-logo,
 nav.site-nav:not(.scrolled) .site-nav-btn,
 nav.site-nav:not(.scrolled) .site-nav-divider {
-  mix-blend-mode: difference !important;
-  color: #fff !important;
-  border-color: rgba(255,255,255,0.4) !important;
-  opacity: 1 !important;
+  color: var(--ink) !important;
+  opacity: 0.75 !important;
 }
 
 /* Theme toggle — always clearly visible with a bordered pill */
@@ -296,10 +245,7 @@ nav.site-nav .theme-toggle-btn {
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 nav.site-nav:not(.scrolled) .theme-toggle-btn {
-  background: rgba(255,255,255,0.85) !important;
-  color: #1a1a1a !important;
-  border-color: rgba(255,255,255,0.6) !important;
-  backdrop-filter: blur(4px);
+  background: transparent;
 }
 nav.site-nav.scrolled .theme-toggle-btn {
   background: transparent;
@@ -308,13 +254,12 @@ nav.site-nav .theme-toggle-btn:hover {
   background: var(--card) !important;
 }
 
-/* Clean up previous glass fixes that are no longer needed with blending */
 .light nav.site-nav:not(.scrolled),
 .dark nav.site-nav:not(.scrolled) {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border-bottom: none !important;
+  background: var(--glass) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--border-muted) !important;
 }
 
 nav.site-nav.scrolled {

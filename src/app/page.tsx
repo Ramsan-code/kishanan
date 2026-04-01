@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef, useCallback, RefObject } from "react";
+import { useEffect, useState, useRef, RefObject } from "react";
 import { ContactSection } from "@/components/contact-section";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
@@ -133,27 +133,6 @@ function TestimonialsSection() {
   );
 }
 
-/* ─── CINEMATIC INTRO ─────────────────────────────────────────────────── */
-function Intro({ onDone }: { onDone: () => void }) {
-  const [hiding, setHiding] = useState(false);
-
-  useEffect(() => {
-    // After 2s hold, trigger hide animation
-    const t1 = setTimeout(() => setHiding(true), 1800);
-    // After animation completes, unmount
-    const t2 = setTimeout(() => onDone(), 2900);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [onDone]);
-
-  return (
-    <div id="intro-overlay" className={hiding ? "hide" : ""}>
-      <div className="intro-logo">Kishanan S.</div>
-      <div className="intro-sub">Filmmaker &middot; CEO &middot; Visionary</div>
-      <div className="intro-bar" />
-    </div>
-  );
-}
-
 /* ─── MARQUEE STRIP ───────────────────────────────────────────────────── */
 function Marquee({ dark = false }: { dark?: boolean }) {
   const items = [
@@ -279,7 +258,7 @@ function Navbar() {
   return (
     <>
       <nav className={`site-nav ${scrolled ? "scrolled" : ""}`} id="main-nav">
-        <div style={{ maxWidth: "1240px", margin: "0 auto", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 2rem" }}>
+        <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 4rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <a href="#hero" className="font-serif site-nav-logo" style={{ fontSize: "1.2rem", fontWeight: 600, textDecoration: "none" }}>KS</a>
           </div>
@@ -327,13 +306,11 @@ function HeroSection() {
       {/* Mobile portrait strip */}
       <div className="hero-portrait-mobile">
         <Image src="/portrait.png" alt="Kishanan Sasikumar" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.1) contrast(1.08)" }} priority />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "32px", background: "#000", zIndex: 5 }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "#000", zIndex: 5 }} />
       </div>
 
       {/* Desktop portrait — 58% */}
       <div className="hidden md:block" style={{ width: "58%", position: "relative", overflow: "hidden", minHeight: "100vh", background: "#111" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "52px", background: "#000", zIndex: 10 }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "52px", background: "#000", zIndex: 10 }} />
 
         <Image
@@ -736,9 +713,6 @@ function Footer() {
 
 /* ─── ROOT ────────────────────────────────────────────────────────────── */
 export default function Home() {
-  const [introVisible, setIntroVisible] = useState(true);
-  const doneCallback = useCallback(() => setIntroVisible(false), []);
-
   useReveal();
   useScrollProgress();
   useCustomCursor();
@@ -749,9 +723,6 @@ export default function Home() {
       <div id="cursor-dot" />
       <div id="cursor-ring" />
       <div id="scroll-progress" />
-
-      {/* Cinematic intro */}
-      {introVisible && <Intro onDone={doneCallback} />}
 
       <SocialSidebar />
       <Navbar />
