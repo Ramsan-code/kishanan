@@ -462,7 +462,7 @@ function ImpactSection() {
           ))}
         </div>
       </div>
-      <Marquee dark />
+      <Marquee />
     </section>
   );
 }
@@ -604,13 +604,7 @@ function SunDawnSection() {
 
 /* ─── FOOTER ──────────────────────────────────────────────────────────── */
 function Footer() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
 
   return (
     <footer id="footer" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)", paddingTop: "7rem" }} className="section-pad">
@@ -686,7 +680,7 @@ export default function Home() {
         <ImpactSection />
         <EvolutionSection />
         <SunDawnSection />
-        <TestimonialsSection />
+
         <ContactSection />
         <Footer />
       </main>
