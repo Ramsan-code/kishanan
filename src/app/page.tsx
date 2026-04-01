@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef, RefObject } from "react";
+import { useEffect, useState } from "react";
 import { ContactSection } from "@/components/contact-section";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
 function useReveal() {
@@ -46,15 +47,6 @@ function useCustomCursor() {
   }, []);
 }
 
-function useScrollTrigger(ref: React.RefObject<HTMLElement | null>, callback: () => void) {
-  useEffect(() => {
-    if (!ref.current) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) callback(); }, { threshold: 0.5 });
-    io.observe(ref.current);
-    return () => io.disconnect();
-  }, [ref, callback]);
-}
-
 function StatItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
   return (
     <div>
@@ -63,8 +55,6 @@ function StatItem({ value, suffix, label }: { value: number; suffix: string; lab
     </div>
   );
 }
-
-
 
 
 function CapabilitiesSection() {
@@ -97,44 +87,9 @@ function CapabilitiesSection() {
   );
 }
 
-function TestimonialsSection() {
-  const testimonials = [
-    { name: "", role: "", text: "", initial: "A" },
-    { name: "", role: "", text: ".", initial: "S" },
-    { name: "", role: "", text: "", initial: "T" }
-  ];
-
-  return (
-    <section id="testimonials" style={{ background: "var(--paper)", borderTop: "1px solid rgba(45,36,36,0.06)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
-        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>06 / Testimonials</span>
-          <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
-        </div>
-
-        <div className="testimonial-grid" style={{ display: "grid", gap: "3rem" }}>
-          {testimonials.map((t, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-                <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--ghost)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 600, color: "var(--ink)", opacity: 0.4, flexShrink: 0 }}>
-                   {t.initial}
-                </div>
-                <div>
-                  <h4 className="font-serif" style={{ fontSize: "1.1rem", lineHeight: 1 }}>{t.name}</h4>
-                  <p className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.3, marginTop: "0.2rem" }}>{t.role}</p>
-                </div>
-              </div>
-              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.7, fontStyle: "italic" }}>&ldquo;{t.text}&rdquo;</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─── MARQUEE STRIP ───────────────────────────────────────────────────── */
-function Marquee({ dark = false }: { dark?: boolean }) {
+function Marquee() {
   const items = [
     "Newborn Cinema", "·", "SunDawn Eventz", "·", "Cinematographer", "·",
     "Creative CEO", "·", "Eezham Cinema", "·", "Editorial Vision", "·",
@@ -159,8 +114,6 @@ function Marquee({ dark = false }: { dark?: boolean }) {
     </div>
   );
 }
-
-import { ThemeToggle } from "@/components/theme-toggle";
 
 /* ─── FLOATING SOCIAL SIDEBAR ─────────────────────────────────────────── */
 function SocialSidebar() {
