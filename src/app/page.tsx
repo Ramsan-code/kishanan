@@ -89,32 +89,6 @@ function CapabilitiesSection() {
 }
 
 
-/* ─── MARQUEE STRIP ───────────────────────────────────────────────────── */
-function Marquee() {
-  const items = [
-    "Newborn Cinema", "·", "SunDawn Eventz", "·", "Cinematographer", "·",
-    "Creative CEO", "·", "Eezham Cinema", "·", "Editorial Vision", "·",
-    "5+ Productions", "·", "South Asian Narratives", "·"
-  ];
-  const doubled = [...items, ...items];
-
-  return (
-    <div style={{ overflow: "hidden", padding: "1.25rem 0", borderTop: `1px solid var(--border-muted)`, borderBottom: `1px solid var(--border-muted)`, background: "transparent" }}>
-      <div className="marquee-track">
-        {doubled.map((item, i) => (
-          <span key={i} className="font-sans" style={{
-            fontSize: "0.6rem", letterSpacing: "0.25em", textTransform: "uppercase",
-            color: "var(--ink)",
-            opacity: 0.35,
-            padding: "0 2rem"
-          }}>
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 /* ─── FLOATING SOCIAL SIDEBAR ─────────────────────────────────────────── */
 function SocialSidebar() {
@@ -313,11 +287,6 @@ function HeroSection() {
             <Link href="#contact" className="btn-ghost" id="hero-collaborate-btn">Collaborate</Link>
           </div>
 
-          <div className="reveal reveal-delay-4 stat-grid-mobile" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--border-muted)", display: "flex", gap: "2.5rem" }}>
-            {[{ n: 500, suffix: "+", l: "Productions" }, { n: 7, suffix: "+", l: "Years Active" }, { n: 2, suffix: "", l: "Ventures Founded" }].map((s) => (
-              <StatItem key={s.l} value={s.n} suffix={s.suffix} label={s.l} />
-            ))}
-          </div>
         </div>
       </div>
 
@@ -334,7 +303,6 @@ function HeroSection() {
 function PhilosophySection() {
   return (
     <section id="philosophy" style={{ background: "var(--paper)" }}>
-      <Marquee />
       <div className="section-pad" style={{ borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
         <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
           <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
@@ -539,7 +507,6 @@ function ImpactSection() {
           ))}
         </div>
       </div>
-      <Marquee />
     </section>
   );
 }
@@ -599,14 +566,14 @@ function EvolutionSection() {
   );
 }
 
-/* ─── SUNDAWN EVENTZ ──────────────────────────────────────────────────── */
+// /* ─── SUNDAWN EVENTZ ──────────────────────────────────────────────────── */
 function SunDawnSection() {
-  const achievements = [
-    { num: "50+", label: "Events Produced", desc: "From intimate cultural gatherings to large-scale gala productions across South Asia." },
-    { num: "10K+", label: "Guests Hosted", desc: "Curating immersive, high-end experiences for discerning audiences and global brands." },
-    { num: "3", label: "States Covered", desc: "Operating across Tamil Nadu, Kerala, and Karnataka with a growing national footprint." },
-    { num: "100%", label: "Client Retention", desc: "Every client returns. A testament to execution quality and creative precision." },
-  ];
+  // const achievements = [
+  //   { num: "50+", label: "Events Produced", desc: "From intimate cultural gatherings to large-scale gala productions across South Asia." },
+  //   { num: "10K+", label: "Guests Hosted", desc: "Curating immersive, high-end experiences for discerning audiences and global brands." },
+  //   { num: "3", label: "States Covered", desc: "Operating across Tamil Nadu, Kerala, and Karnataka with a growing national footprint." },
+  //   { num: "100%", label: "Client Retention", desc: "Every client returns. A testament to execution quality and creative precision." },
+  // ];
 
   const services = [
     { icon: "✦", title: "Gala & Award Nights", desc: "Black-tie events engineered for prestige — every detail deliberate, every moment cinematic." },
@@ -731,13 +698,9 @@ function Footer() {
 export default function Home() {
   useReveal();
   useScrollProgress();
-  useCustomCursor();
 
   return (
     <>
-      {/* Global chrome */}
-      <div id="cursor-dot" />
-      <div id="cursor-ring" />
       <div id="scroll-progress" />
 
       <SocialSidebar />

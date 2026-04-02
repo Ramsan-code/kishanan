@@ -164,27 +164,6 @@ body:has(button:hover) #cursor-ring {
   overflow: hidden;
 }
 
-/* ─── MARQUEE STRIP ──────────────────────────────────────────────────── */
-.marquee-track {
-  display: flex;
-  white-space: nowrap;
-  animation: marquee 28s linear infinite;
-  width: max-content;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
 
 /* ─── PROJECT GRID ───────────────────────────────────────────────────── */
 .triptych-grid {
