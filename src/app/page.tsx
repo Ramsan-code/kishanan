@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ContactSection } from "@/components/contact-section";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { getYouTubeID } from "@/lib/youtube";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
 function useReveal() {
@@ -93,7 +94,7 @@ function Marquee() {
   const items = [
     "Newborn Cinema", "·", "SunDawn Eventz", "·", "Cinematographer", "·",
     "Creative CEO", "·", "Eezham Cinema", "·", "Editorial Vision", "·",
-    "500+ Productions", "·", "South Asian Narratives", "·"
+    "5+ Productions", "·", "South Asian Narratives", "·"
   ];
   const doubled = [...items, ...items];
 
@@ -368,33 +369,106 @@ function PhilosophySection() {
 
 /* ─── PROJECTS ────────────────────────────────────────────────────────── */
 const PROJECTS = [
-  { id: "newborn", title: "The Threshold", cat: "Newborn Cinema", badge: "Feature", year: "2024", img: "/proj-newborn.png", desc: "Feature narrative exploring displacement and South Asian identity." },
-  { id: "sundawn", title: "SunDawn Grand Gala", cat: "SunDawn Eventz", badge: "Event", year: "2023", img: "/proj-sundawn.png", desc: "Flagship luxury event produced for 800+ guests." },
-  { id: "eezham", title: "Eezham Narratives", cat: "Eezham Cinema", badge: "Docuseries", year: "2024", img: "/proj-eezham.png", desc: "Documentary series preserving Tamil cultural memory." },
-  { id: "freelance", title: "The Edit Archives", cat: "Freelance", badge: "Post-Prod", year: "2022", img: "/proj-edit.png", desc: "500+ commercial cuts across brands, campaigns, and films." },
-  { id: "commercial", title: "Commercial Frames", cat: "Cinematography", badge: "Commercial", year: "2023", img: "/proj-commercial.png", desc: "Luxury brand productions shot across South Asia." },
-  { id: "archive", title: "Archive Studies", cat: "Case Studies", badge: "Consultancy", year: "2025", img: "/proj-archive.png", desc: "Strategic analysis of cinematic narrative in urban contexts." },
+  {
+    id: "seyon", youtubeId: "baG2LBG1M9I", title: "Seyon Short Film", cat: "Seyon Narrative", badge: "Short Film", year: "2024", img: "https://img.youtube.com/vi/baG2LBG1M9I/maxresdefault.jpg", desc: `Film Credits:
+Music : kalaiyarasan Erampanayakam
+Written & Directed by Dilojan
+Starring : Ratheeshan,Thanu,Lashakan,Vishnu,Akaash,A.J. Melistan,Piranavan,pirem,senthuran,
+Banner : film mafia
+Editting : Dilojan
+Director of Photography : kishan
+Sound : DRK studio
+Lyricist : Ratheeshan 
+singer :  Annaviyar Kandasamy, Erampanayakam
+uduku by :mano
+
+Join this channel to get access to perks:
+https://www.youtube.com/channel/UC8fTp3LRm3CejEdCPosLoPA/join` }, {
+    id: "podcast", youtubeId: "tDV-N9grDqQ", title: "Brand Standards & Strategy | Sasi Balasingam", cat: "Creative Branding", badge: "Podcast", year: "2024", img: "https://img.youtube.com/vi/tDV-N9grDqQ/maxresdefault.jpg", desc: `Suscribe For more podcast
+
+00:00 - Intro: Design Standards in Vavuniya (அறிமுகம்)
+01:27 - What Defines a Good Brand? (Brand இன் தரம் எதில் உள்ளது?)
+02:49 - The Reality of Local Businesses vs. Franchises
+04:40 - Why Hire an Agency (Triple O Nine) vs. DIY?
+05:31 - The Problem with Influencer Marketing (Sales Drops)
+07:45 - The "Copy-Paste" Business Culture in Vavuniya
+08:35 - Helping Startups & Business Expansion
+10:25 - Success Story: Construction Company & Australian Market
+13:49 - Case Study: "Thai Square" (Mixing Tamil & Thai Culture)
+15:46 - Working with Diaspora Clients (Challenges & Trust)
+17:38 - Stop Using Stolen/Internet Logos! (எச்சரிக்கை)
+21:26 - Why Diaspora Investments Fail in Vavuniya? (முக்கியம்)
+23:25 - The Solution: Market Research & Consulting Services
+26:36 - Movie Poster Secrets: Vadimaniyan & Idiyan
+32:32 - Respecting Artists & Pricing Issues (கலைஞர்களின் மதிப்பு)
+36:26 - Designing for "Design Nani" (Time Travel Concept)
+39:02 - How to Handle "Bad Ideas" from Clients
+43:18 - Marketing Strategy for "Ailasa" Anthology Film
+46:44 - New Office & Conclusion (புதிய அலுவலகம்)` },
 ];
 
 function ImpactSection() {
+  const [items, setItems] = useState(PROJECTS);
   const [hovered, setHovered] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [newUrl, setNewUrl] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
 
   const toggleExpand = (id: string) => {
     setExpanded(expanded === id ? null : id);
   };
 
+  const handleAddVideo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const vid = getYouTubeID(newUrl);
+    if (!vid) {
+      alert("Invalid YouTube URL");
+      return;
+    }
+
+    setIsAdding(true);
+    try {
+      const res = await fetch(`/api/youtube?videoId=${vid}`);
+      const data = await res.json();
+
+      if (data.error) throw new Error(data.error);
+
+      const newProj = {
+        id: `yt-${vid}`,
+        youtubeId: vid,
+        title: data.title,
+        cat: "YouTube Production",
+        badge: "Video",
+        year: new Date().getFullYear().toString(),
+        img: data.thumbnails.maxres || data.thumbnails.high || `https://img.youtube.com/vi/${vid}/maxresdefault.jpg`,
+        desc: data.description
+      };
+
+      setItems([newProj, ...items]);
+      setNewUrl("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fetch video details. Check API key or URL.");
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <section id="work" style={{ background: "#0D0D0B", color: "#E8E8E2" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
-        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "1rem" }}>
-          <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
-            Selected<br />Productions
-          </h2>
+        <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "2rem" }}>
+          <div>
+            <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
+              Selected<br />Productions
+            </h2>
+          </div>
+
+
         </div>
 
         <div className="triptych-grid">
-          {PROJECTS.map((proj, i) => (
+          {items.map((proj, i) => (
             <div key={proj.id} id={`project-${proj.id}`}
               className={`project-card reveal reveal-delay-${(i % 3) + 1}`}
               style={{ cursor: "none" }}
@@ -409,12 +483,15 @@ function ImpactSection() {
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
                   style={{ objectFit: "cover", filter: hovered === proj.id || expanded === proj.id ? "grayscale(0) contrast(1.05)" : "grayscale(0.85)", transition: "filter 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)" }}
+                  onError={(e) => {
+                    if (proj.youtubeId && e.currentTarget.src.includes('maxresdefault')) {
+                      e.currentTarget.src = `https://img.youtube.com/vi/${proj.youtubeId}/hqdefault.jpg`;
+                    }
+                  }}
                 />
-                {/* Letterbox bars */}
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
 
-                {/* Expand Indicator */}
                 <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered === proj.id && !expanded ? 1 : 0, transition: "opacity 0.3s" }}>
                   <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", background: "rgba(0,0,0,0.6)", padding: "0.5rem 1rem", border: "1px solid rgba(255,255,255,0.2)", color: "#fff" }}>VIEW DETAILS</span>
                 </div>
@@ -434,9 +511,8 @@ function ImpactSection() {
                     {proj.cat}
                   </p>
 
-                  {/* Expanded Content */}
                   <div style={{ height: expanded === proj.id ? "auto" : hovered === proj.id ? "40px" : "0", opacity: hovered === proj.id || expanded === proj.id ? 1 : 0, overflow: "hidden", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", marginTop: "0.75rem" }}>
-                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "inherit", opacity: 0.52, lineHeight: 1.6, marginBottom: "1rem" }}>
+                    <p className="font-sans" style={{ fontSize: "0.72rem", color: "inherit", opacity: 0.52, lineHeight: 1.6, marginBottom: "1rem", whiteSpace: "pre-wrap" }}>
                       {proj.desc}
                     </p>
                     {expanded === proj.id && (
@@ -444,14 +520,15 @@ function ImpactSection() {
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                           <div>
                             <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>ROLE</span>
-                            <span className="font-sans" style={{ fontSize: "0.58rem" }}>Lead Producer / Editor</span>
+                            <span className="font-sans" style={{ fontSize: "0.58rem" }}>Director / Cinematographer</span>
                           </div>
                           <div>
-                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>STATUS</span>
-                            <span className="font-sans" style={{ fontSize: "0.58rem" }}>Released / Global</span>
+                            <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>SOURCE</span>
+                            <a href={proj.youtubeId ? `https://youtube.com/watch?v=${proj.youtubeId}` : "#"} target="_blank" className="font-sans" style={{ fontSize: "0.58rem", color: "inherit" }}>
+                              {proj.youtubeId ? "YouTube Link" : "Private Archive"}
+                            </a>
                           </div>
                         </div>
-                        <button className="font-sans" style={{ marginTop: "1.5rem", fontSize: "0.52rem", border: "none", background: "none", color: "inherit", borderBottom: "1px solid", padding: "0", cursor: "none" }}>EXPLORE CASE STUDY →</button>
                       </div>
                     )}
                   </div>
@@ -514,7 +591,7 @@ function EvolutionSection() {
             <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>02</span>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2021 — 2025</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Editor</h3>
-            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>500+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>5+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
           </div>
         </div>
       </div>
@@ -560,21 +637,13 @@ function SunDawnSection() {
               &ldquo;Where culture meets curation — engineering luxury events that leave a mark long after the lights go down.&rdquo;
             </p>
             <p className="font-sans" style={{ fontSize: "0.9rem", lineHeight: 1.85, opacity: 0.5 }}>
-              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across South India.
+              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across Srilanka.
             </p>
           </div>
         </div>
 
         {/* Achievement Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0", borderTop: "1px solid rgba(232,232,226,0.08)", marginBottom: "5rem" }} className="sundawn-stats-grid reveal reveal-delay-1">
-          {achievements.map((a, i) => (
-            <div key={i} style={{ padding: "2.5rem 2rem", borderRight: i < 3 ? "1px solid rgba(232,232,226,0.08)" : "none" }}>
-              <div className="font-serif" style={{ fontSize: "clamp(2rem, 3vw, 3.5rem)", fontWeight: 600, lineHeight: 1, marginBottom: "0.4rem" }}>{a.num}</div>
-              <div className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.25em", textTransform: "uppercase", opacity: 0.35, marginBottom: "0.9rem" }}>{a.label}</div>
-              <p className="font-sans" style={{ fontSize: "0.8rem", lineHeight: 1.7, opacity: 0.45 }}>{a.desc}</p>
-            </div>
-          ))}
-        </div>
+
 
         {/* Services Grid */}
         <div className="reveal reveal-delay-2" style={{ marginBottom: "4rem" }}>
@@ -634,8 +703,8 @@ function Footer() {
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
                 { label: "Fiverr", href: "https://www.fiverr.com" },
-                { label: "LinkedIn", href: "https://www.linkedin.com" },
-                { label: "Instagram", href: "https://www.instagram.com" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/kishanan-sasikumar-b7a0a03a3?utm_source=share_via&utm_content=profile&utm_medium=member_ios" },
+                { label: "Instagram", href: "https://www.instagram.com/kishanan.sasikumar?igsh=MW1udjF1cWV2ODFqYQ%3D%3D&utm_source=qr" },
               ].map((s) => (
                 <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="font-sans"
                   style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", opacity: 0.7 }}
