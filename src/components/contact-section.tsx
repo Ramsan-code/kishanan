@@ -61,7 +61,7 @@ export function ContactSection() {
     <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="section-pad">
       <div className="brand-container">
         
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem" }} className="responsive-grid-2 reveal">
+        <div className="contact-grid reveal">
           
           {/* Left Content */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -84,7 +84,7 @@ export function ContactSection() {
           </div>
 
           {/* Right Content: Form */}
-          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.06)", padding: "3.5rem", position: "relative" }}>
+          <div className="contact-form-card">
             <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
               
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -131,7 +131,7 @@ export function ContactSection() {
               )}
             </form>
 
-            <span className="font-script" style={{ position: "absolute", bottom: "-0.5rem", right: "1rem", fontSize: "4.5rem", opacity: 0.04, color: "var(--paper)", transform: "rotate(-8deg)", pointerEvents: "none" }}>
+            <span className="font-script contact-decor-text">
               Inquiry
             </span>
           </div>

@@ -830,6 +830,52 @@ h2 {
   }
 }
 
+/* ─── CONTACT SECTION RESPONSIVE ─────────────────────────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+}
+
+.contact-form-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 3.5rem;
+  position: relative;
+}
+
+.contact-decor-text {
+  position: absolute;
+  bottom: -0.5rem;
+  right: 1rem;
+  font-size: 4.5rem;
+  opacity: 0.04;
+  color: var(--paper);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .contact-form-card {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .contact-decor-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-grid {
+    gap: 3rem;
+  }
+}
+
 /* Hide Next.js error overlay */
 nextjs-portal {
   display: none !important;
