@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ContactSection } from "@/components/contact-section";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { getYouTubeID } from "@/lib/youtube";
 
 /* ─── GLOBAL HOOKS ────────────────────────────────────────────────────── */
@@ -177,7 +176,6 @@ function Navbar() {
   }, []);
 
   const links = [
-    { label: "About", href: "#about" },
     { label: "Philosophy", href: "#philosophy" },
     { label: "Work", href: "#work" },
     { label: "Evolution", href: "#evolution" },
@@ -202,8 +200,6 @@ function Navbar() {
           </div>
 
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <ThemeToggle />
-            <div style={{ width: "1px", height: "20px", background: "var(--ink)", opacity: 0.1, margin: "0 0.25rem" }} className="hidden md:block site-nav-divider" />
             <button className="md:hidden nav-mobile-hamburger" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", padding: "0.5rem" }} aria-label="Toggle menu">
               <div style={{ width: "22px", display: "flex", flexDirection: "column", gap: "5px" }}>
                 {[0, 1, 2].map((n) => (
@@ -299,63 +295,34 @@ function HeroSection() {
   );
 }
 
-/* ─── ABOUT ──────────────────────────────────────────────────────────── */
-function AboutSection() {
-  return (
-    <section id="about" style={{ background: "var(--paper)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
-        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>01 / The Profile</span>
-          <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
-        </div>
-
-        <div className="responsive-grid-2" style={{ alignItems: "flex-start" }}>
-          <div>
-            <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: "2.5rem" }}>
-              The <em>Architect</em> of<br />Cinematic Strategy
-            </h2>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <p className="font-sans justify-editorial" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.85, marginBottom: "2rem" }}>
-              Kishanan Sasikumar is the founder and CEO of Newborn Cinema, a production house focused on redefining South Asian storytelling through the lens of strategic design. With a career spanning architectural design, cinematic editing, and creative entrepreneurship, he approaches every frame as a calculated move and every project as a strategic coordinate.
-            </p>
-            <p className="font-sans justify-editorial" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.85 }}>
-              Based in Eezham, he is committed to building institutional standards that elevate regional narratives to a globally competitive stage. He doesn't just make films—he builds creative ecosystems where beauty is a byproduct of clarity.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─── PHILOSOPHY ──────────────────────────────────────────────────────── */
 function PhilosophySection() {
   return (
-    <section id="philosophy" style={{ background: "var(--paper)" }}>
-      <div className="section-pad" style={{ borderBottom: "1px solid rgba(45,36,36,0.06)" }}>
+    <section id="philosophy" style={{ background: "var(--ink)", color: "var(--paper)" }}>
+      <div className="section-pad" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
           <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>02 / Philosophy</span>
-            <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.42, whiteSpace: "nowrap" }}>02 / Philosophy</span>
+            <div style={{ height: "1px", flexGrow: 1, background: "rgba(255,255,255,0.1)" }} />
           </div>
 
-          <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.8rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4.5rem" }}>
+          <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.8rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4.5rem", color: "var(--paper)" }}>
             The Creative<br /><em>Philosophy</em>
           </h2>
 
           <div className="philosophy-grid">
-            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.82 }}>
+            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--paper)", opacity: 0.85 }}>
               Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration—they are strategic coordinates engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story through the precision of an architect.
             </p>
-            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.82 }}>
+            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--paper)", opacity: 0.85 }}>
               Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move; every cut is a strategic beat. We build creative ventures that resonate globally because they are built on architectural foundations of intent—proving that beauty is a byproduct of clarity.
             </p>
           </div>
 
           <div className="reveal" style={{ marginTop: "5rem", display: "flex", alignItems: "center", gap: "2rem" }}>
-            <div style={{ height: "1px", width: "50px", background: "var(--ink)", opacity: 0.12 }} />
-            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.28 }}>
+            <div style={{ height: "1px", width: "50px", background: "var(--paper)", opacity: 0.2 }} />
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.4 }}>
               Crafting Cinematic Experiences &amp; Building Creative Ventures
             </span>
           </div>
@@ -665,7 +632,6 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <AboutSection />
         <PhilosophySection />
         <CapabilitiesSection />
         <ImpactSection />

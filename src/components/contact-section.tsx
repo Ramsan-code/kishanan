@@ -58,68 +58,68 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" style={{ background: "var(--paper)", borderTop: "1px solid var(--border-muted)" }} className="section-pad">
+    <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem" }} className="responsive-grid-2 reveal">
           
           {/* Left Content */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.42, display: "block", marginBottom: "2rem" }}>
+            <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.5, display: "block", marginBottom: "2rem" }}>
               07 / CONNECT
             </span>
-            <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "3rem" }}>
+            <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "3rem", color: "var(--paper)" }}>
               Have a Project<br />in <em>Mind?</em>
             </h2>
-            <p className="font-sans" style={{ fontSize: "1rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.6, maxWidth: "420px", marginBottom: "4rem" }}>
+            <p className="font-sans" style={{ fontSize: "1rem", lineHeight: 1.85, color: "var(--paper)", opacity: 0.7, maxWidth: "420px", marginBottom: "4rem" }}>
               Reach out to discuss cinematic collaborations, luxury event productions, or strategic creative ventures. Let&apos;s build something lasting.
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
               <div>
-                <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.3, display: "block", marginBottom: "0.5rem" }}>Direct Email</span>
-                <a href="mailto:shankishan2212@gmail.com" className="font-serif" style={{ fontSize: "1.4rem", color: "var(--ink)", textDecoration: "none", borderBottom: "1px solid var(--border-muted)" }}>shankishan2212@gmail.com</a>
+                <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.4, display: "block", marginBottom: "0.5rem" }}>Direct Email</span>
+                <a href="mailto:shankishan2212@gmail.com" className="font-serif" style={{ fontSize: "1.4rem", color: "var(--paper)", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>shankishan2212@gmail.com</a>
               </div>
             </div>
           </div>
 
           {/* Right Content: Form */}
-          <div style={{ background: "var(--card)", padding: "3.5rem", position: "relative" }}>
+          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.06)", padding: "3.5rem", position: "relative" }}>
             <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
               
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.5 }}>Full Name</label>
+                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.6 }}>Full Name</label>
                 <input 
                   {...register("user_name")}
                   type="text" 
                   autoComplete="name"
-                  style={{ background: "none", border: "none", borderBottom: "1px solid var(--border-muted)", padding: "0.75rem 0", color: "var(--ink)", fontFamily: "inherit", fontSize: "1rem", outline: "none" }} 
+                  style={{ background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "var(--paper)", fontFamily: "inherit", fontSize: "1rem", outline: "none" }} 
                 />
                 {errors.user_name && <span style={{ fontSize: "0.6rem", color: "#f87171" }}>{errors.user_name.message}</span>}
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.5 }}>Email Address</label>
+                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.6 }}>Email Address</label>
                 <input 
                   {...register("user_email")}
                   type="email" 
                   autoComplete="email"
-                  style={{ background: "none", border: "none", borderBottom: "1px solid var(--border-muted)", padding: "0.75rem 0", color: "var(--ink)", fontFamily: "inherit", fontSize: "1rem", outline: "none" }} 
+                  style={{ background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "var(--paper)", fontFamily: "inherit", fontSize: "1rem", outline: "none" }} 
                 />
                 {errors.user_email && <span style={{ fontSize: "0.6rem", color: "#f87171" }}>{errors.user_email.message}</span>}
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.5 }}>Message</label>
+                <label className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.6 }}>Message</label>
                 <textarea 
                   {...register("message")}
                   rows={4} 
-                  style={{ background: "none", border: "none", borderBottom: "1px solid var(--border-muted)", padding: "0.75rem 0", color: "var(--ink)", fontFamily: "inherit", fontSize: "1rem", outline: "none", resize: "none" }}
+                  style={{ background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", padding: "0.75rem 0", color: "var(--paper)", fontFamily: "inherit", fontSize: "1rem", outline: "none", resize: "none" }}
                 ></textarea>
                 {errors.message && <span style={{ fontSize: "0.6rem", color: "#f87171" }}>{errors.message.message}</span>}
               </div>
 
-              <button type="submit" disabled={loading} className="btn-primary" style={{ marginTop: "1rem", width: "100%", justifyContent: "center" }}>
+              <button type="submit" disabled={loading} className="font-sans" style={{ marginTop: "1rem", width: "100%", justifyContent: "center", background: "var(--paper)", color: "var(--ink)", padding: "1.2rem", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, border: "none", cursor: "pointer", transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "0.85"} onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}>
                 {loading ? "Delivering..." : "Send Message"}
               </button>
 
@@ -131,7 +131,7 @@ export function ContactSection() {
               )}
             </form>
 
-            <span className="font-script" style={{ position: "absolute", bottom: "-0.5rem", right: "1rem", fontSize: "4.5rem", opacity: 0.08, transform: "rotate(-8deg)", pointerEvents: "none" }}>
+            <span className="font-script" style={{ position: "absolute", bottom: "-0.5rem", right: "1rem", fontSize: "4.5rem", opacity: 0.04, color: "var(--paper)", transform: "rotate(-8deg)", pointerEvents: "none" }}>
               Inquiry
             </span>
           </div>
