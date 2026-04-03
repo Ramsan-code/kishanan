@@ -58,8 +58,8 @@ a, button, input {
   max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: clamp(1.25rem, 5vw, 4rem);
+  padding-right: clamp(1.25rem, 5vw, 4rem);
 }
 
 @media (max-width: 1024px) {
@@ -859,10 +859,13 @@ h2 {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 4rem;
+    width: 100%;
   }
   
   .contact-form-card {
-    padding: 2.5rem 1.5rem;
+    padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 4vw, 1.5rem);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .contact-decor-text {
