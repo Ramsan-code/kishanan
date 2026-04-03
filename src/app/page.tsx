@@ -60,10 +60,10 @@ function StatItem({ value, suffix, label }: { value: number; suffix: string; lab
 
 function CapabilitiesSection() {
   const services = [
-    { title: "Cinematic Production", desc: "Crafting feature narratives and high-fidelity commercials with architectural precision.", icons: ["Film", "Direction"] },
-    { title: "Creative Strategy", desc: "Institutional leadership and scaling South Asian creative ventures for global audiences.", icons: ["Vision", "Strategy"] },
-    { title: "Post-Production", desc: "Mastering narrative rhythm and the discipline of decisive editing for 500+ productions.", icons: ["Edit", "Pacing"] },
-    { title: "Luxury Experience", desc: "Engineering high-end events and immersive physical narratives for global brands.", icons: ["Events", "Design"] }
+    { title: "Creative Direction", desc: "Shaping ideas into clear, cohesive visual outcomes.", icons: ["Direction", "Vision"] },
+    { title: "Visual Storytelling", desc: "Crafting narratives that connect through pacing, emotion, and imagery.", icons: ["Edit", "Pacing"] },
+    { title: "Brand Strategist", desc: "Building brands with clarity, consistency, and purpose.", icons: ["Strategy", "Growth"] },
+    { title: "Team Leadership", desc: "Leading teams to execute efficiently while maintaining creative quality.", icons: ["Leadership", "Scale"] }
   ];
 
   return (
@@ -177,6 +177,7 @@ function Navbar() {
   }, []);
 
   const links = [
+    { label: "About", href: "#about" },
     { label: "Philosophy", href: "#philosophy" },
     { label: "Work", href: "#work" },
     { label: "Evolution", href: "#evolution" },
@@ -230,73 +231,99 @@ function HeroSection() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex" }}>
-      {/* Mobile portrait strip */}
-      <div className="hero-portrait-mobile">
-        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "50% 15%", filter: "grayscale(0.1) contrast(1.08)" }} priority />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "var(--paper)", zIndex: 5 }} />
-      </div>
-
-      {/* Desktop portrait — 58% */}
-      <div className="hidden md:block" style={{ width: "58%", position: "relative", overflow: "hidden", minHeight: "100vh", background: "#111" }}>
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "52px", background: "#000", zIndex: 10 }} />
-
-        <Image
-          src="/portrait.png"
-          alt="Kishanan Sasikumar — Filmmaker & Creative Entrepreneur"
-          fill priority sizes="(max-width: 768px) 0vw, 58vw"
-          style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.12) contrast(1.08)", opacity: loaded ? 1 : 0, transition: "opacity 1.4s ease" }}
-          onLoad={() => setLoaded(true)}
-        />
-
-        {/* Left gradient */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 55%)", zIndex: 5 }} />
-
-        {/* Thread */}
-        <div className="font-script" style={{ position: "absolute", bottom: "100px", right: "4rem", zIndex: 15, fontSize: "clamp(2rem, 4vw, 3.5rem)", opacity: 0.55, color: "#fff", transform: "rotate(-8deg)", textShadow: "0 2px 24px rgba(0,0,0,0.6)", whiteSpace: "nowrap" }}>
-          Newborn Cinema
+    <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", background: "var(--paper)", overflow: "hidden" }}>
+      
+      {/* Background Image Container */}
+      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "100%", zIndex: 1, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "70%" }}>
+          <Image
+            src="/portrait.png" // Assumes portrait.png exists from earlier contexts
+            alt="Kishanan Sasikumar"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 70vw"
+            style={{ 
+              objectFit: "cover", 
+              objectPosition: "60% center", 
+              filter: "grayscale(1) contrast(1.15) brightness(0.9)", // Matched from design aesthetics
+              opacity: loaded ? 1 : 0, 
+              transition: "opacity 1.4s ease" 
+            }}
+            onLoad={() => setLoaded(true)}
+          />
         </div>
-
-        {/* Caption */}
-        <span className="font-sans" style={{ position: "absolute", bottom: "18px", left: "2rem", zIndex: 15, fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
-          Kishanan Sasikumar — Filmmaker &amp; CEO
-        </span>
+        {/* Gradient overlay to seamlessly blend the paper background into the image */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, var(--paper) 0%, var(--paper) 35%, transparent 75%)" }} />
+        {/* Soft radial overlay to ensure max readability on smaller devices */}
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 10% 50%, var(--paper) 0%, transparent 60%)" }} className="md:hidden" />
       </div>
 
-      {/* Editorial content — 42% */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--paper)", borderLeft: "1px solid var(--border-muted)" }}
-        className="section-pad hero-editorial-column">
-
-        <div id="hero-editorial-inner" className="hero-brand-inner" style={{ width: "100%", maxWidth: "580px" }}>
-          <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.85, marginBottom: "1.25rem", fontWeight: 600 }}>
+      {/* Content Container */}
+      <div style={{ position: "relative", zIndex: 10, width: "100%" }} className="brand-container">
+        <div style={{ maxWidth: "620px", padding: "5rem 0" }}>
+          <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.75, marginBottom: "1.25rem", fontWeight: 600 }}>
             Filmmaker &amp; Creative Entrepreneur
           </p>
 
-          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(2.5rem, 6vw, 6.8rem)", fontWeight: 600, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem", paddingLeft: "0.1em" }}>
+          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(3.8rem, 8vw, 7rem)", fontWeight: 600, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem", color: "var(--ink)", paddingLeft: "0.1em" }}>
             Kishanan<br />Sasikumar
           </h1>
 
-          <p className="font-sans reveal reveal-delay-2" style={{ fontSize: "0.62rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.5, marginBottom: "2.5rem", fontWeight: 500 }}>
-            CEO, Newborn Cinema
-          </p>
-
-
-          <p className="font-sans justify-editorial reveal reveal-delay-3" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
-            Kishanan builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
-          </p>
-
-          <div className="reveal reveal-delay-3 hero-btns-container" style={{ marginTop: "2.5rem" }}>
-            <a href="#work" className="btn-primary hero-btn-stack" id="hero-view-work-btn">View Latest Work</a>
-            <Link href="#contact" className="btn-ghost hero-btn-stack" id="hero-collaborate-btn">Collaborate</Link>
+          <div className="reveal reveal-delay-2" style={{ marginBottom: "2.5rem" }}>
+            <p className="font-sans" style={{ fontSize: "0.88rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.85, marginBottom: "1.25rem" }}>
+              I started as a designer, built my foundation in visuals, and transitioned into video editing, where I refined storytelling, pacing, and emotion. Today, I operate as a creative entrepreneur and CEO of a film production company based in Eezham.
+            </p>
+            <p className="font-sans" style={{ fontSize: "0.88rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.85 }}>
+              My work sits at the intersection of design, editing, and cinematic thinking—focused on creating clear, engaging, and purposeful content. I approach every project with a balance of aesthetics and strategy, ensuring that what we create not only looks good, but works.
+            </p>
           </div>
 
+          {/* Buttons flush together matching design */}
+          <div className="reveal reveal-delay-3" style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch" }}>
+            <a href="#work" className="btn-primary hero-btn-stack" id="hero-view-work-btn" style={{ padding: "1.2rem 2.8rem", fontSize: "0.62rem" }}>
+              View Latest Work
+            </a>
+            <Link href="#contact" className="btn-ghost hero-btn-stack" id="hero-collaborate-btn" style={{ padding: "1.2rem 2.8rem", fontSize: "0.62rem", borderLeftColor: "transparent" }}>
+              Collaborate
+            </Link>
+          </div>
         </div>
       </div>
+      
+      {/* Scroll indicator - kept for convention, slightly adjusted to fit the new layout */}
+      <div style={{ position: "absolute", bottom: "3.5rem", left: "4rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", zIndex: 15 }} className="hidden md:flex">
+        <div style={{ width: "1px", height: "50px", background: "var(--ink)", opacity: 0.15 }} />
+        <span className="font-sans" style={{ fontSize: "0.42rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.3, writingMode: "vertical-rl" }}>Scroll</span>
+      </div>
+    </section>
+  );
+}
 
-      {/* Scroll indicator */}
-      <div style={{ position: "absolute", bottom: "2.5rem", right: "2rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }} className="hidden md:flex">
-        <div style={{ width: "1px", height: "50px", background: "var(--ink)", opacity: 0.18 }} />
-        <span className="font-sans" style={{ fontSize: "0.42rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.28, writingMode: "vertical-rl" }}>Scroll</span>
+/* ─── ABOUT ──────────────────────────────────────────────────────────── */
+function AboutSection() {
+  return (
+    <section id="about" style={{ background: "var(--paper)" }} className="section-pad">
+      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
+        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
+          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.32, whiteSpace: "nowrap" }}>01 / The Profile</span>
+          <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
+        </div>
+
+        <div className="responsive-grid-2" style={{ alignItems: "flex-start" }}>
+          <div>
+            <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: "2.5rem" }}>
+              The <em>Architect</em> of<br />Cinematic Strategy
+            </h2>
+          </div>
+          <div className="reveal reveal-delay-1">
+            <p className="font-sans justify-editorial" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.85, marginBottom: "2rem" }}>
+              Kishanan Sasikumar is the founder and CEO of Newborn Cinema, a production house focused on redefining South Asian storytelling through the lens of strategic design. With a career spanning architectural design, cinematic editing, and creative entrepreneurship, he approaches every frame as a calculated move and every project as a strategic coordinate.
+            </p>
+            <p className="font-sans justify-editorial" style={{ fontSize: "1.1rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.85 }}>
+              Based in Eezham, he is committed to building institutional standards that elevate regional narratives to a globally competitive stage. He doesn't just make films—he builds creative ecosystems where beauty is a byproduct of clarity.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -318,11 +345,11 @@ function PhilosophySection() {
           </h2>
 
           <div className="philosophy-grid">
-            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.78 }}>
-              Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration — they are strategic coordinates engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story.
+            <p className="font-sans justify-editorial reveal reveal-delay-1" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.82 }}>
+              Design and filmmaking are inseparable narratives. Aesthetics are not merely decoration—they are strategic coordinates engineered to provoke specific human responses. In the intersection of light and shadow, we locate the truth of the story through the precision of an architect.
             </p>
-            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.78 }}>
-              Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move. Every cut is a narrative beat. We build creative ventures that resonate because they are built on architectural foundations of intent — not instinct alone.
+            <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "1.05rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.82 }}>
+              Storytelling provides depth, but production clarity enables execution at scale. Every frame is a calculated move; every cut is a strategic beat. We build creative ventures that resonate globally because they are built on architectural foundations of intent—proving that beauty is a byproduct of clarity.
             </p>
           </div>
 
@@ -533,7 +560,7 @@ function EvolutionSection() {
             <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>01</span>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2019 — 2021</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Designer</h3>
-            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>Establishing laws of visual tension and architectural form. Every pixel intentional. Every composition a hypothesis.</p>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.62 }}>Establishing the structural laws of visual tension and architectural form. In this phase, every pixel was a hypothesis and every composition a blueprint for engagement.</p>
           </div>
 
           {/* CEO — Hero Bento */}
@@ -545,8 +572,8 @@ function EvolutionSection() {
             <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
               Newborn Cinema
             </h3>
-            <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.8, color: "var(--paper)", opacity: 0.65, marginBottom: "2.5rem" }}>
-              Transitioning a decade of craft into institutional leadership — founding and scaling South Asian creative ventures that redefine how regional narratives reach global audiences.
+            <p className="font-sans" style={{ maxWidth: "460px", fontSize: "1rem", lineHeight: 1.8, color: "var(--paper)", opacity: 0.75, marginBottom: "2.5rem" }}>
+              Transitioning a decade of technical craft into institutional leadership—building a production standard in Eezham that redefines how South Asian regional narratives reach and resonate with a global audience.
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <a href="#work" className="btn-primary" id="evo-view-work-btn" style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--paper)" }}>View Latest Work</a>
@@ -560,7 +587,7 @@ function EvolutionSection() {
             <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>02</span>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2021 — 2025</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Editor</h3>
-            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.58 }}>5+ commercial and independent cuts. Mastering narrative rhythm, cinematic pacing, and the discipline of decisive removal.</p>
+            <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.62 }}>Mastering the narrative rhythm and the discipline of decisive removal. Here, storytelling became a study in cinematic pacing and emotional resonance.</p>
           </div>
         </div>
       </div>
@@ -638,6 +665,7 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
+        <AboutSection />
         <PhilosophySection />
         <CapabilitiesSection />
         <ImpactSection />
