@@ -420,7 +420,7 @@ function ImpactSection() {
   };
 
   return (
-    <section id="work" style={{ background: "#0D0D0B", color: "#E8E8E2" }} className="section-pad">
+    <section id="work" style={{ background: "rgb(45, 36, 36)", color: "var(--paper)" }} className="section-pad">
       <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
         <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "2rem" }}>
           <div>
@@ -442,7 +442,14 @@ function ImpactSection() {
               onTouchEnd={() => setHovered(null)}
               onClick={() => toggleExpand(proj.id)}
             >
-              <div className="letterbox" style={{ marginBottom: "1.25rem", border: "1px solid var(--border-muted)", position: "relative" }}>
+              <a 
+                href={proj.youtubeId ? `https://www.youtube.com/watch?v=${proj.youtubeId}` : "#"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="letterbox" 
+                style={{ display: "block", marginBottom: "1.25rem", border: "1px solid var(--border-muted)", position: "relative", overflow: "hidden" }}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <Image
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
@@ -456,10 +463,15 @@ function ImpactSection() {
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "8px", background: "#000", zIndex: 5 }} />
 
-                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: hovered === proj.id && !expanded ? 1 : 0, transition: "opacity 0.3s" }}>
-                  <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.2em", background: "rgba(0,0,0,0.6)", padding: "0.5rem 1rem", border: "1px solid rgba(255,255,255,0.2)", color: "#fff" }}>VIEW DETAILS</span>
+                {/* YouTube Play Button Overlay */}
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: hovered === proj.id ? "transparent" : "rgba(0,0,0,0.15)", transition: "background-color 0.3s ease", zIndex: 10 }}>
+                  <div style={{ width: "68px", height: "48px", backgroundColor: hovered === proj.id ? "#FF0000" : "rgba(33, 33, 33, 0.85)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", transition: "background-color 0.3s ease, transform 0.3s ease", transform: hovered === proj.id ? "scale(1.05)" : "scale(1)" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: "4px" }}>
+                      <path d="M7 4V20L20 12L7 4Z" fill="white" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              </a>
 
               <div className="project-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
