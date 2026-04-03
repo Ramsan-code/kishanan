@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Kishanan Sasikumar — Filmmaker & Creative Entrepreneur",
   description: "Official portfolio of Kishanan Sasikumar, CEO of Newborn Cinema & Founder of SunDawn Eventz. Building cinematic experiences and creative ventures.",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 import { ThemeProvider } from "@/components/theme-provider";

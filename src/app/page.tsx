@@ -77,7 +77,7 @@ function CapabilitiesSection() {
         <div className="capabilities-grid reveal" style={{ display: "grid", gap: "4rem 6rem" }}>
           {services.map((s, i) => (
             <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
-              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem" }}>0{i + 1} &mdash; CAPABILITY</span>
+              <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem", whiteSpace: "nowrap" }}>0{i + 1} &mdash; CAPABILITY</span>
               <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
               <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.6, maxWidth: "420px" }}>{s.desc}</p>
             </div>
@@ -233,8 +233,8 @@ function HeroSection() {
     <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex" }}>
       {/* Mobile portrait strip */}
       <div className="hero-portrait-mobile">
-        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.1) contrast(1.08)" }} priority />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "#000", zIndex: 5 }} />
+        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.1) contrast(1.08)" }} priority />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "var(--paper)", zIndex: 5 }} />
       </div>
 
       {/* Desktop portrait — 58% */}
@@ -244,7 +244,7 @@ function HeroSection() {
         <Image
           src="/portrait.png"
           alt="Kishanan Sasikumar — Filmmaker & Creative Entrepreneur"
-          fill priority sizes="58vw"
+          fill priority sizes="(max-width: 768px) 0vw, 58vw"
           style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.12) contrast(1.08)", opacity: loaded ? 1 : 0, transition: "opacity 1.4s ease" }}
           onLoad={() => setLoaded(true)}
         />
@@ -268,23 +268,26 @@ function HeroSection() {
         className="section-pad hero-editorial-column">
 
         <div id="hero-editorial-inner" style={{ width: "100%", maxWidth: "580px", paddingLeft: "4rem" }}>
-          <p className="font-sans reveal" style={{ fontSize: "0.52rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.42, marginBottom: "2rem" }}>
+          <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.65, marginBottom: "1.25rem", fontWeight: 500 }}>
+            Filmmaker &amp; Creative Entrepreneur
+          </p>
+
+          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(2.5rem, 6vw, 6.8rem)", fontWeight: 600, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
+            Kishanan<br />Sasikumar
+          </h1>
+
+          <p className="font-sans reveal reveal-delay-2" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "2.5rem" }}>
             CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
           </p>
 
-          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(3rem, 4.5vw, 5.5rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
-            Filmmaker &amp;<br />Creative<br />Entrepreneur
-          </h1>
 
-
-
-          <p className="font-sans justify-editorial reveal reveal-delay-2" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
-            Kishanan Sasikumar builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
+          <p className="font-sans justify-editorial reveal reveal-delay-3" style={{ fontSize: "0.92rem", lineHeight: 1.85, color: "var(--ink)", opacity: 0.68, maxWidth: "360px" }}>
+            Kishanan builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
           </p>
 
           <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <a href="#work" className="btn-primary" id="hero-view-work-btn">View Latest Work</a>
-            <Link href="#contact" className="btn-ghost" id="hero-collaborate-btn">Collaborate</Link>
+            <a href="#work" className="btn-primary hero-btn-stack" id="hero-view-work-btn">View Latest Work</a>
+            <Link href="#contact" className="btn-ghost hero-btn-stack" id="hero-collaborate-btn">Collaborate</Link>
           </div>
 
         </div>
@@ -521,8 +524,8 @@ function EvolutionSection() {
           <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
         </div>
 
-        <h2 className="font-serif reveal" style={{ fontSize: "clamp(2.5rem, 4.5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: "4rem" }}>
-          Designer → Editor → <em>CEO</em>
+        <h2 className="font-serif reveal" style={{ fontSize: "clamp(2rem, 4.5vw, 5rem)", lineHeight: 1.15, letterSpacing: "-0.01em", marginBottom: "4rem" }}>
+          Designer / Editor<br /><em>CEO</em>
         </h2>
 
         <div className="bento-grid">
@@ -536,7 +539,7 @@ function EvolutionSection() {
 
           {/* CEO — Hero Bento */}
           <div className="bento-card bento-ceo span-8 row-2 reveal reveal-delay-1" style={{ background: "var(--ink)", color: "var(--paper)", padding: "4rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-            <div className="font-script" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
+            <div className="font-script bento-decor-text" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
               Building Ventures
             </div>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.38, marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
@@ -604,7 +607,7 @@ function SunDawnSection() {
               &ldquo;Where culture meets curation — engineering luxury events that leave a mark long after the lights go down.&rdquo;
             </p>
             <p className="font-sans" style={{ fontSize: "0.9rem", lineHeight: 1.85, opacity: 0.5 }}>
-              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across Srilanka.
+              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across Sri Lanka.
             </p>
           </div>
         </div>
