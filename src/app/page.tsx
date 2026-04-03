@@ -33,17 +33,40 @@ function useScrollProgress() {
 
 function useCustomCursor() {
   useEffect(() => {
-    const dot = document.getElementById("cursor-dot");
-    const ring = document.getElementById("cursor-ring");
-    if (!dot || !ring) return;
-    const onMove = (e: MouseEvent) => {
-      dot.style.left = `${e.clientX}px`;
-      dot.style.top = `${e.clientY}px`;
-      ring.style.left = `${e.clientX}px`;
-      ring.style.top = `${e.clientY}px`;
+    if (typeof window === "undefined" || window.matchMedia("(pointer: coarse)").matches) return;
+
+    const reticle = document.getElementById("cursor-reticle");
+    const viewfinder = document.getElementById("cursor-viewfinder");
+    
+    if (!reticle || !viewfinder) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let viewX = mouseX;
+    let viewY = mouseY;
+    let frame: number;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      reticle.style.left = `${mouseX}px`;
+      reticle.style.top = `${mouseY}px`;
     };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
+
+    const render = () => {
+      viewX += (mouseX - viewX) * 0.15;
+      viewY += (mouseY - viewY) * 0.15;
+      viewfinder.style.left = `${viewX}px`;
+      viewfinder.style.top = `${viewY}px`;
+      frame = requestAnimationFrame(render);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    frame = requestAnimationFrame(render);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 }
 
@@ -73,7 +96,7 @@ function CapabilitiesSection() {
           <div style={{ height: "1px", flexGrow: 1, background: "var(--border-muted)" }} />
         </div>
 
-        <div className="capabilities-grid reveal" style={{ display: "grid", gap: "4rem 6rem" }}>
+        <div className="capabilities-grid reveal" style={{ display: "grid", gap: "clamp(2rem, 5vw, 6rem)" }}>
           {services.map((s, i) => (
             <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
               <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem", whiteSpace: "nowrap" }}>0{i + 1} &mdash; CAPABILITY</span>
@@ -94,7 +117,7 @@ function SocialSidebar() {
   const socials = [
     {
       name: "Instagram",
-      href: "https://www.instagram.com",
+      href: "https://www.instagram.com/kishanan.sasikumar?igsh=MW1udjF1cWV2ODFqYQ%3D%3D&utm_source=qr",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -105,22 +128,12 @@ function SocialSidebar() {
     },
     {
       name: "LinkedIn",
-      href: "https://www.linkedin.com",
+      href: "https://www.linkedin.com/in/kishanan-sasikumar-b7a0a03a3?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "1.1rem", height: "1.1rem" }}>
           <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" />
           <rect x="2" y="9" width="4" height="12" />
           <circle cx="4" cy="4" r="2" />
-        </svg>
-      ),
-    },
-
-    {
-      name: "Fiverr",
-      href: "https://www.fiverr.com",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: "1.1rem", height: "1.1rem" }}>
-          <path d="M21.07 0H2.93C1.31 0 0 1.31 0 2.93v18.14C0 22.69 1.31 24 2.93 24h18.14C22.69 24 24 22.69 24 21.07V2.93C24 1.31 22.69 0 21.07 0zm-6.86 18.55h-2.71v-7.4H9.79V18.55H7.08V8.71h7.13v9.84zm.86-11.44c0 .86-.7 1.56-1.56 1.56s-1.56-.7-1.56-1.56.7-1.56 1.56-1.56 1.56.7 1.56 1.56z" />
         </svg>
       ),
     },
@@ -255,7 +268,7 @@ function HeroSection() {
       </div>
 
       {/* Content Container */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%", paddingLeft: "clamp(2.5rem, 8vw, 9rem)" }}>
+      <div style={{ position: "relative", zIndex: 10, width: "100%", paddingLeft: "clamp(1.25rem, 6vw, 9rem)", paddingRight: "1.25rem" }}>
         <div style={{ maxWidth: "620px", padding: "5rem 0" }}>
           <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.75, marginBottom: "1.25rem", fontWeight: 600 }}>
             Filmmaker &amp; Creative Entrepreneur
@@ -421,7 +434,7 @@ function ImpactSection() {
 
   return (
     <section id="work" style={{ background: "rgb(45, 36, 36)", color: "var(--paper)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
+      <div className="brand-container">
         <div className="reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "4.5rem", flexWrap: "wrap", gap: "2rem" }}>
           <div>
             <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 5.5rem)", letterSpacing: "-0.02em", lineHeight: 1 }}>
@@ -523,7 +536,7 @@ function ImpactSection() {
 function EvolutionSection() {
   return (
     <section id="evolution" style={{ background: "var(--paper)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
+      <div className="brand-container">
         <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "4rem" }}>
           <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.32)", whiteSpace: "nowrap" }}>04 / Career Arc</span>
           <div style={{ height: "1px", flexGrow: 1, background: "rgba(45,36,36,0.07)" }} />
@@ -536,7 +549,6 @@ function EvolutionSection() {
         <div className="bento-grid">
           {/* Phase 1 */}
           <div className="bento-card bento-phase-sm span-4 reveal" style={{ background: "var(--card)", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
-            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>01</span>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2019 — 2021</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Designer</h3>
             <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.62 }}>Establishing the structural laws of visual tension and architectural form. In this phase, every pixel was a hypothesis and every composition a blueprint for engagement.</p>
@@ -544,9 +556,6 @@ function EvolutionSection() {
 
           {/* CEO — Hero Bento */}
           <div className="bento-card bento-ceo span-8 row-2 reveal reveal-delay-1" style={{ background: "var(--ink)", color: "var(--paper)", padding: "4rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-            <div className="font-script bento-decor-text" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
-              Building Ventures
-            </div>
             <span className="font-sans" style={{ fontSize: "0.62rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.5, marginBottom: "1.25rem", fontWeight: 500 }}>Present — CEO &amp; Producer</span>
             <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
               Newborn Cinema
@@ -558,12 +567,10 @@ function EvolutionSection() {
               <a href="#work" className="btn-primary" id="evo-view-work-btn" style={{ background: "var(--paper)", color: "var(--ink)", borderColor: "var(--paper)" }}>View Latest Work</a>
               <Link href="#contact" className="btn-ghost" id="evo-collaborate-btn" style={{ borderColor: "var(--border-muted)", color: "var(--paper)" }}>Collaborate</Link>
             </div>
-            <span className="font-serif" style={{ position: "absolute", bottom: "1.5rem", right: "2.5rem", fontSize: "7rem", color: "var(--paper)", opacity: 0.04, lineHeight: 1 }}>03</span>
           </div>
 
           {/* Phase 2 */}
           <div className="bento-card bento-phase-sm span-4 reveal reveal-delay-2" style={{ background: "var(--card)", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative" }}>
-            <span className="font-serif" style={{ position: "absolute", top: "1.25rem", right: "1.25rem", fontSize: "5.5rem", color: "var(--ink)", opacity: 0.05, lineHeight: 1 }}>02</span>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "0.7rem" }}>2021 — 2025</span>
             <h3 className="font-serif" style={{ fontSize: "2rem", marginBottom: "0.9rem" }}>The Editor</h3>
             <p className="font-sans" style={{ fontSize: "0.82rem", lineHeight: 1.75, color: "var(--ink)", opacity: 0.62 }}>Mastering the narrative rhythm and the discipline of decisive removal. Here, storytelling became a study in cinematic pacing and emotional resonance.</p>
@@ -606,7 +613,6 @@ function Footer() {
             <h5 className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(45,36,36,0.3)", marginBottom: "1.5rem" }}>Connection</h5>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
-                { label: "Fiverr", href: "https://www.fiverr.com" },
                 { label: "LinkedIn", href: "https://www.linkedin.com/in/kishanan-sasikumar-b7a0a03a3?utm_source=share_via&utm_content=profile&utm_medium=member_ios" },
                 { label: "Instagram", href: "https://www.instagram.com/kishanan.sasikumar?igsh=MW1udjF1cWV2ODFqYQ%3D%3D&utm_source=qr" },
               ].map((s) => (
@@ -635,10 +641,24 @@ function Footer() {
 export default function Home() {
   useReveal();
   useScrollProgress();
+  useCustomCursor();
 
   return (
     <>
       <div id="scroll-progress" />
+      <div id="cursor-reticle" className="hidden lg:flex" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+      </div>
+      <div id="cursor-viewfinder" className="hidden lg:flex" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 12 8 L 8 8 L 8 12" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M 28 8 L 32 8 L 32 12" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M 12 32 L 8 32 L 8 28" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M 28 32 L 32 32 L 32 28" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      </div>
 
       <SocialSidebar />
       <Navbar />

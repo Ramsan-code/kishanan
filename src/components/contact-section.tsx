@@ -59,7 +59,7 @@ export function ContactSection() {
 
   return (
     <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
+      <div className="brand-container">
         
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem" }} className="responsive-grid-2 reveal">
           
