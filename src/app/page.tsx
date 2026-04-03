@@ -78,8 +78,8 @@ function CapabilitiesSection() {
           {services.map((s, i) => (
             <div key={s.title} className={`reveal reveal-delay-${(i % 2) + 1}`} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--border-muted)" }}>
               <span className="font-sans" style={{ fontSize: "0.45rem", letterSpacing: "0.2em", color: "var(--ink)", opacity: 0.3, display: "block", marginBottom: "1rem", whiteSpace: "nowrap" }}>0{i + 1} &mdash; CAPABILITY</span>
-              <h3 className="font-serif" style={{ fontSize: "2.2rem", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
-              <p className="font-sans" style={{ fontSize: "0.95rem", lineHeight: 1.8, color: "var(--ink)", opacity: 0.6, maxWidth: "420px" }}>{s.desc}</p>
+              <h3 className="font-serif" style={{ fontSize: "clamp(1.8rem, 5vw, 2.2rem)", marginBottom: "1.25rem", letterSpacing: "-0.01em" }}>{s.title}</h3>
+              <p className="font-sans" style={{ fontSize: "0.9rem", lineHeight: 1.7, color: "var(--ink)", opacity: 0.6, maxWidth: "420px" }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -215,9 +215,9 @@ function Navbar() {
       </nav>
 
       {/* Mobile full-screen menu */}
-      <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 900, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2.5rem", transition: "opacity 0.3s ease, visibility 0.3s ease", opacity: menuOpen ? 1 : 0, visibility: menuOpen ? "visible" : "hidden" }}>
+      <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 900, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem", transition: "opacity 0.3s ease, visibility 0.3s ease", opacity: menuOpen ? 1 : 0, visibility: menuOpen ? "visible" : "hidden" }}>
         {links.map((l) => (
-          <Link key={l.label} href={l.href} className="font-serif" onClick={() => setMenuOpen(false)} style={{ fontSize: "2.8rem", color: "var(--ink)", textDecoration: "none", fontWeight: 500, opacity: 0.85 }}>{l.label}</Link>
+          <Link key={l.label} href={l.href} className="font-serif" onClick={() => setMenuOpen(false)} style={{ fontSize: "clamp(2rem, 10vw, 2.8rem)", color: "var(--ink)", textDecoration: "none", fontWeight: 500, opacity: 0.85 }}>{l.label}</Link>
         ))}
         <Link href="#contact" className="btn-primary" onClick={() => setMenuOpen(false)} style={{ marginTop: "1rem" }}>Collaborate</Link>
       </div>
@@ -233,7 +233,7 @@ function HeroSection() {
     <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex" }}>
       {/* Mobile portrait strip */}
       <div className="hero-portrait-mobile">
-        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(0.1) contrast(1.08)" }} priority />
+        <Image src="/portrait.png" alt="Kishanan Sasikumar" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "50% 15%", filter: "grayscale(0.1) contrast(1.08)" }} priority />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "32px", background: "var(--paper)", zIndex: 5 }} />
       </div>
 
@@ -253,7 +253,7 @@ function HeroSection() {
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 55%)", zIndex: 5 }} />
 
         {/* Thread */}
-        <div className="font-script" style={{ position: "absolute", bottom: "80px", right: "2.5rem", zIndex: 15, fontSize: "3rem", opacity: 0.5, color: "#fff", transform: "rotate(-8deg)", textShadow: "0 2px 24px rgba(0,0,0,0.6)" }}>
+        <div className="font-script" style={{ position: "absolute", bottom: "100px", right: "4rem", zIndex: 15, fontSize: "clamp(2rem, 4vw, 3.5rem)", opacity: 0.55, color: "#fff", transform: "rotate(-8deg)", textShadow: "0 2px 24px rgba(0,0,0,0.6)", whiteSpace: "nowrap" }}>
           Newborn Cinema
         </div>
 
@@ -268,15 +268,15 @@ function HeroSection() {
         className="section-pad hero-editorial-column">
 
         <div id="hero-editorial-inner" className="hero-brand-inner" style={{ width: "100%", maxWidth: "580px" }}>
-          <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.65, marginBottom: "1.25rem", fontWeight: 500 }}>
+          <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.85, marginBottom: "1.25rem", fontWeight: 600 }}>
             Filmmaker &amp; Creative Entrepreneur
           </p>
 
-          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(2.5rem, 6vw, 6.8rem)", fontWeight: 600, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
+          <h1 className="font-serif reveal reveal-delay-1" style={{ fontSize: "clamp(2.5rem, 6vw, 6.8rem)", fontWeight: 600, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem", paddingLeft: "0.1em" }}>
             Kishanan<br />Sasikumar
           </h1>
 
-          <p className="font-sans reveal reveal-delay-2" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "2.5rem" }}>
+          <p className="font-sans reveal reveal-delay-2" style={{ fontSize: "0.62rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.5, marginBottom: "2.5rem", fontWeight: 500 }}>
             CEO, Newborn Cinema
           </p>
 
@@ -442,7 +442,6 @@ function ImpactSection() {
           {items.map((proj, i) => (
             <div key={proj.id} id={`project-${proj.id}`}
               className={`project-card reveal reveal-delay-${(i % 3) + 1}`}
-              style={{ cursor: "none" }}
               onMouseEnter={() => setHovered(proj.id)}
               onMouseLeave={() => setHovered(null)}
               onTouchStart={() => setHovered(proj.id)}
@@ -468,13 +467,13 @@ function ImpactSection() {
                 </div>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
-                    <h3 className="font-sans" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "inherit", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id || expanded === proj.id ? { letterSpacing: "0.3em" } : {}) }}>
+              <div className="project-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "50px" }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
+                    <h3 className="font-sans project-card-title" style={{ fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "inherit", transition: "letter-spacing 0.3s ease", ...(hovered === proj.id || expanded === proj.id ? { letterSpacing: "0.3em" } : {}), wordBreak: "break-word" }}>
                       {proj.title}
                     </h3>
-                    <span style={{ fontSize: "0.42rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.15rem 0.35rem", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "2px", color: "inherit", opacity: 0.5 }}>
+                    <span className="project-card-badge" style={{ fontSize: "0.42rem", letterSpacing: "0.15em", textTransform: "uppercase", padding: "0.15rem 0.35rem", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "2px", color: "inherit", opacity: 0.5 }}>
                       {proj.badge}
                     </span>
                   </div>
@@ -488,7 +487,7 @@ function ImpactSection() {
                     </p>
                     {expanded === proj.id && (
                       <div className="reveal" style={{ padding: "1.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                        <div className="expanded-details-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                           <div>
                             <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>ROLE</span>
                             <span className="font-sans" style={{ fontSize: "0.58rem" }}>Director / Cinematographer</span>
@@ -504,7 +503,7 @@ function ImpactSection() {
                     )}
                   </div>
                 </div>
-                <span className="font-sans" style={{ fontSize: "0.52rem", color: "inherit", opacity: 0.2, flexShrink: 0 }}>{proj.year}</span>
+                <span className="font-sans project-card-year" style={{ fontSize: "0.52rem", color: "inherit", opacity: 0.2, flexShrink: 0, marginLeft: "1rem" }}>{proj.year}</span>
               </div>
             </div>
           ))}
@@ -542,7 +541,7 @@ function EvolutionSection() {
             <div className="font-script bento-decor-text" style={{ position: "absolute", top: "2.5rem", right: "-3rem", fontSize: "7rem", opacity: 0.06, color: "var(--paper)", transform: "rotate(-18deg)", pointerEvents: "none", whiteSpace: "nowrap" }}>
               Building Ventures
             </div>
-            <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.38, marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
+            <span className="font-sans" style={{ fontSize: "0.62rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.5, marginBottom: "1.25rem", fontWeight: 500 }}>Present — CEO &amp; Producer</span>
             <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
               Newborn Cinema
             </h3>

@@ -17,6 +17,7 @@
   --glass: rgba(245, 245, 241, 0.90);
   --ring-opacity: 0.4;
   --card: #E8E8DE;
+  --btn-ghost-border: rgba(45, 36, 36, 0.5);
 }
 
 .dark {
@@ -32,6 +33,7 @@
   --glass: rgba(13, 13, 11, 0.90);
   --ring-opacity: 0.2;
   --card: #1A1A18;
+  --btn-ghost-border: rgba(232, 232, 226, 0.5);
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────── */
@@ -54,8 +56,8 @@ body {
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
-  /* custom cursor replaces */
+  cursor: auto;
+  /* system cursor restored as custom cursor was removed */
 }
 
 /* ─── RESPONSIVE CONTAINER ─────────────────────────────────────────── */
@@ -70,8 +72,16 @@ body {
 
 @media (max-width: 1024px) {
   .brand-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .hero-btns-container {
+    flex-direction: column;
+  }
+
+  .social-sidebar {
+    display: none !important;
   }
 }
 
@@ -414,7 +424,7 @@ nav.site-nav.scrolled {
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  border: 1px solid rgba(45, 36, 36, 0.25);
+  border: 1px solid var(--btn-ghost-border);
   cursor: pointer;
   text-decoration: none;
   transition: border-color 0.28s ease, background 0.28s ease, transform 0.2s ease;
@@ -464,8 +474,8 @@ nav.site-nav.scrolled {
   display: none;
   position: relative;
   width: 100%;
-  height: 50vw;
-  min-height: 260px;
+  height: 100vw; /* Tall portrait for better face/subject visibility */
+  max-height: 520px;
   overflow: hidden;
   background: #111;
 }
@@ -632,6 +642,7 @@ nav.site-nav.scrolled {
     justify-content: center !important;
     padding: 0.8rem 1.5rem !important;
     font-size: 0.55rem !important;
+    letter-spacing: 0.15em !important;
   }
 
   .bento-decor-text {
@@ -656,16 +667,17 @@ h2 {
 }
 
 .hero-brand-inner {
-  padding-left: 4rem;
+  padding-left: 2rem;
 }
 
 @media (max-width: 1024px) {
   .hero-brand-inner {
-    padding-left: 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
   .hero-btns-container {
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
   }
 }
 
@@ -674,8 +686,13 @@ h2 {
   }
 
   /* Specific Hero Mobile Fixes */
+  #hero {
+    min-height: auto !important; /* Allow natural flow instead of forcing 100vh gap */
+  }
+
   .hero-editorial-column {
-    padding: 4rem 1.5rem !important;
+    padding: 3rem 1.5rem 5rem 1.5rem !important; /* Adjusted top padding */
+    justify-content: flex-start !important; /* Start content naturally below image */
     border-left: none !important;
     border-top: 1px solid var(--border-muted);
   }
@@ -737,10 +754,44 @@ h2 {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Hide on small screens */
+/* ─── MOBILE REFINEMENTS (ADJUSTED) ─────────────────────────────────── */
 @media (max-width: 640px) {
   .social-sidebar {
     display: none !important;
+  }
+  
+  .project-card-header {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .project-card-title {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.15em !important;
+    line-height: 1.4 !important;
+  }
+
+  .project-card-year {
+    margin-left: 0 !important;
+    margin-top: 0.25rem !important;
+    opacity: 0.4 !important;
+  }
+
+  .project-card-badge {
+    margin-top: 0.5rem !important;
+  }
+
+  /* Reduce Bento background numbers */
+  .bento-card span.font-serif[style*="font-size: 5.5rem"] {
+    font-size: 3.5rem !important;
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+  }
+
+  .bento-card span.font-serif[style*="font-size: 7rem"] {
+    font-size: 4.5rem !important;
+    bottom: 0.5rem !important;
+    right: 1.5rem !important;
   }
 }
 
