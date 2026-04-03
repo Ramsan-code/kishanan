@@ -255,7 +255,7 @@ function HeroSection() {
       </div>
 
       {/* Content Container */}
-      <div style={{ position: "relative", zIndex: 10, width: "100%" }} className="brand-container">
+      <div style={{ position: "relative", zIndex: 10, width: "100%", paddingLeft: "clamp(2.5rem, 8vw, 9rem)" }}>
         <div style={{ maxWidth: "620px", padding: "5rem 0" }}>
           <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.75, marginBottom: "1.25rem", fontWeight: 600 }}>
             Filmmaker &amp; Creative Entrepreneur
