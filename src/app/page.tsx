@@ -460,13 +460,13 @@ function ImpactSection() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="letterbox" 
-                style={{ display: "block", marginBottom: "1.25rem", border: "1px solid var(--border-muted)", position: "relative", overflow: "hidden" }}
+                style={{ display: "block", marginBottom: "1.25rem" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
                   src={proj.img} alt={proj.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   className="letterbox-img"
-                  style={{ objectFit: "cover", filter: hovered === proj.id || expanded === proj.id ? "grayscale(0) contrast(1.05)" : "grayscale(0.85)", transition: "filter 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)" }}
+                  style={{ filter: hovered === proj.id || expanded === proj.id ? "grayscale(0) contrast(1.05)" : "grayscale(0.85)", transition: "filter 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)" }}
                   onError={(e) => {
                     if (proj.youtubeId && e.currentTarget.src.includes('maxresdefault')) {
                       e.currentTarget.src = `https://img.youtube.com/vi/${proj.youtubeId}/hqdefault.jpg`;
@@ -505,8 +505,8 @@ function ImpactSection() {
                       {proj.desc}
                     </p>
                     {expanded === proj.id && (
-                      <div className="reveal" style={{ padding: "1.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
-                        <div className="expanded-details-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                      <div className="reveal" style={{ padding: "1.25rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
+                        <div className="expanded-details-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "1rem" }}>
                           <div>
                             <span className="font-sans" style={{ fontSize: "0.42rem", color: "#E8E8E2", opacity: 0.3, display: "block", marginBottom: "0.25rem" }}>ROLE</span>
                             <span className="font-sans" style={{ fontSize: "0.58rem" }}>Director / Cinematographer</span>
