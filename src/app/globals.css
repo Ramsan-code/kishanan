@@ -40,9 +40,10 @@ body {
   color: var(--ink);
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   cursor: none;
-  overflow-x: hidden;
 }
 
 body:has(a:hover), body:has(button:hover) {
