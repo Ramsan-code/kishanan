@@ -186,7 +186,7 @@ function Navbar() {
   return (
     <>
       <nav className={`site-nav ${scrolled ? "scrolled" : ""}`} id="main-nav">
-        <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 4rem" }}>
+        <div className="brand-container flex-between" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <a href="#hero" className="font-serif site-nav-logo" style={{ fontSize: "1.2rem", fontWeight: 600, textDecoration: "none" }}>KS</a>
           </div>
@@ -267,7 +267,7 @@ function HeroSection() {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--paper)", borderLeft: "1px solid var(--border-muted)" }}
         className="section-pad hero-editorial-column">
 
-        <div id="hero-editorial-inner" style={{ width: "100%", maxWidth: "580px", paddingLeft: "4rem" }}>
+        <div id="hero-editorial-inner" className="hero-brand-inner" style={{ width: "100%", maxWidth: "580px" }}>
           <p className="font-sans reveal" style={{ fontSize: "0.58rem", letterSpacing: "0.38em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.65, marginBottom: "1.25rem", fontWeight: 500 }}>
             Filmmaker &amp; Creative Entrepreneur
           </p>
@@ -277,7 +277,7 @@ function HeroSection() {
           </h1>
 
           <p className="font-sans reveal reveal-delay-2" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, marginBottom: "2.5rem" }}>
-            CEO, Newborn Cinema &nbsp;/&nbsp; Founder, SunDawn Eventz
+            CEO, Newborn Cinema
           </p>
 
 
@@ -285,7 +285,7 @@ function HeroSection() {
             Kishanan builds cinematic ventures at the intersection of artistic expression and strategic leadership. Narrative depth leads; execution follows.
           </p>
 
-          <div className="reveal reveal-delay-3" style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="reveal reveal-delay-3 hero-btns-container" style={{ marginTop: "2.5rem" }}>
             <a href="#work" className="btn-primary hero-btn-stack" id="hero-view-work-btn">View Latest Work</a>
             <Link href="#contact" className="btn-ghost hero-btn-stack" id="hero-collaborate-btn">Collaborate</Link>
           </div>
@@ -544,7 +544,7 @@ function EvolutionSection() {
             </div>
             <span className="font-sans" style={{ fontSize: "0.48rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--paper)", opacity: 0.38, marginBottom: "1rem" }}>Present — CEO &amp; Producer</span>
             <h3 className="font-serif" style={{ fontSize: "clamp(2.5rem, 3.5vw, 4.2rem)", lineHeight: 1.05, marginBottom: "1.5rem", letterSpacing: "-0.02em" }}>
-              Newborn Cinema<br />&amp; SunDawn Eventz
+              Newborn Cinema
             </h3>
             <p className="font-sans" style={{ maxWidth: "420px", fontSize: "1rem", lineHeight: 1.8, color: "var(--paper)", opacity: 0.65, marginBottom: "2.5rem" }}>
               Transitioning a decade of craft into institutional leadership — founding and scaling South Asian creative ventures that redefine how regional narratives reach global audiences.
@@ -569,77 +569,6 @@ function EvolutionSection() {
   );
 }
 
-// /* ─── SUNDAWN EVENTZ ──────────────────────────────────────────────────── */
-function SunDawnSection() {
-  // const achievements = [
-  //   { num: "50+", label: "Events Produced", desc: "From intimate cultural gatherings to large-scale gala productions across South Asia." },
-  //   { num: "10K+", label: "Guests Hosted", desc: "Curating immersive, high-end experiences for discerning audiences and global brands." },
-  //   { num: "3", label: "States Covered", desc: "Operating across Tamil Nadu, Kerala, and Karnataka with a growing national footprint." },
-  //   { num: "100%", label: "Client Retention", desc: "Every client returns. A testament to execution quality and creative precision." },
-  // ];
-
-  const services = [
-    { icon: "✦", title: "Gala & Award Nights", desc: "Black-tie events engineered for prestige — every detail deliberate, every moment cinematic." },
-    { icon: "◈", title: "Cultural Festivals", desc: "Celebrating South Asian heritage through large-scale, immersive public experiences." },
-    { icon: "◉", title: "Brand Activations", desc: "Transforming brand narratives into physical, sensory experiences that audiences remember." },
-    { icon: "⬡", title: "Corporate Summits", desc: "High-stakes corporate events with precision logistics and premium production value." },
-  ];
-
-  return (
-    <section id="sundawn" style={{ background: "#0D0D0B", color: "#E8E8E2" }} className="section-pad">
-      <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 2rem" }}>
-
-        {/* Header */}
-        <div className="reveal" style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "5rem" }}>
-          <span className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "#E8E8E2", opacity: 0.32, whiteSpace: "nowrap" }}>05 / SunDawn Eventz</span>
-          <div style={{ height: "1px", flexGrow: 1, background: "rgba(232,232,226,0.08)" }} />
-        </div>
-
-        {/* Title + Intro */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "end", marginBottom: "5rem" }} className="sundawn-intro-grid reveal">
-          <div>
-            <h2 className="font-serif" style={{ fontSize: "clamp(3rem, 5vw, 6rem)", lineHeight: 1.02, letterSpacing: "-0.02em" }}>
-              SunDawn<br /><em>Eventz</em>
-            </h2>
-          </div>
-          <div>
-            <p className="font-serif" style={{ fontSize: "1.35rem", lineHeight: 1.65, opacity: 0.55, fontStyle: "italic", marginBottom: "1.5rem" }}>
-              &ldquo;Where culture meets curation — engineering luxury events that leave a mark long after the lights go down.&rdquo;
-            </p>
-            <p className="font-sans" style={{ fontSize: "0.9rem", lineHeight: 1.85, opacity: 0.5 }}>
-              Founded by Kishanan Sasikumar, SunDawn Eventz is a premium event production company specialising in high-fidelity cultural, corporate, and lifestyle experiences across Sri Lanka.
-            </p>
-          </div>
-        </div>
-
-        {/* Achievement Stats */}
-
-
-        {/* Services Grid */}
-        <div className="reveal reveal-delay-2" style={{ marginBottom: "4rem" }}>
-          <p className="font-sans" style={{ fontSize: "0.52rem", letterSpacing: "0.3em", textTransform: "uppercase", opacity: 0.3, marginBottom: "3rem" }}>What We Produce</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0" }} className="sundawn-services-grid">
-            {services.map((s, i) => (
-              <div key={i} style={{
-                padding: "2.5rem",
-                borderTop: "1px solid rgba(232,232,226,0.08)",
-                borderRight: i % 2 === 0 ? "1px solid rgba(232,232,226,0.08)" : "none",
-              }}>
-                <div style={{ fontSize: "1.4rem", marginBottom: "1rem", opacity: 0.4 }}>{s.icon}</div>
-                <h4 className="font-serif" style={{ fontSize: "1.5rem", marginBottom: "0.75rem", letterSpacing: "-0.01em" }}>{s.title}</h4>
-                <p className="font-sans" style={{ fontSize: "0.85rem", lineHeight: 1.75, opacity: 0.5 }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-
-
-      </div>
-    </section>
-  );
-}
 
 /* ─── FOOTER ──────────────────────────────────────────────────────────── */
 function Footer() {
@@ -652,7 +581,7 @@ function Footer() {
           <div>
             <h3 className="font-serif" style={{ fontSize: "1.4rem", marginBottom: "1.25rem" }}>Kishanan S.</h3>
             <div className="font-sans" style={{ fontSize: "0.58rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink)", opacity: 0.38, lineHeight: 2.4 }}>
-              Filmmaker &amp; Creative CEO<br />Newborn Cinema<br />SunDawn Eventz<br />© 2026
+              Filmmaker &amp; Creative CEO<br />Newborn Cinema<br />© 2026
             </div>
           </div>
 
@@ -714,7 +643,6 @@ export default function Home() {
         <CapabilitiesSection />
         <ImpactSection />
         <EvolutionSection />
-        <SunDawnSection />
 
         <ContactSection />
         <Footer />

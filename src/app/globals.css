@@ -58,6 +58,23 @@ body {
   /* custom cursor replaces */
 }
 
+/* ─── RESPONSIVE CONTAINER ─────────────────────────────────────────── */
+.brand-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+@media (max-width: 1024px) {
+  .brand-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
 /* ─── FILM GRAIN ─────────────────────────────────────────────────────── */
 body::after {
   content: '';
@@ -523,27 +540,6 @@ nav.site-nav.scrolled {
     border-bottom: none !important;
   }
 
-  .sundawn-intro-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2.5rem !important;
-  }
-
-  .sundawn-stats-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .sundawn-stats-grid>div {
-    border-right: none !important;
-    border-bottom: 1px solid rgba(232, 232, 226, 0.08);
-  }
-
-  .sundawn-services-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .sundawn-services-grid>div {
-    border-right: none !important;
-  }
 }
 
 @media (max-width: 480px) {
@@ -555,9 +551,6 @@ nav.site-nav.scrolled {
     grid-template-columns: 1fr !important;
   }
 
-  .sundawn-stats-grid {
-    grid-template-columns: 1fr !important;
-  }
 }
 
 /* ─── FLOATING SOCIAL BAR (horizontal row) ──────────────────────────── */
@@ -647,17 +640,50 @@ nav.site-nav.scrolled {
     top: 1rem !important;
   }
 
-  h1 {
-    font-size: clamp(2.2rem, 12vw, 4rem) !important;
-    line-height: 1.0 !important;
-  }
+h1 {
+  font-size: clamp(2.2rem, 12vw, 4rem) !important;
+  line-height: 1.0 !important;
+}
 
-  h2 {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
+h2 {
+  font-size: clamp(2rem, 8vw, 3rem) !important;
+}
+
+.hero-btns-container {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.hero-brand-inner {
+  padding-left: 4rem;
+}
+
+@media (max-width: 1024px) {
+  .hero-brand-inner {
+    padding-left: 0;
   }
+  .hero-btns-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
 
   .section-pad {
     padding: 5rem 1.5rem !important;
+  }
+
+  /* Specific Hero Mobile Fixes */
+  .hero-editorial-column {
+    padding: 4rem 1.5rem !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border-muted);
+  }
+
+  #hero-editorial-inner {
+    padding-left: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
 
   .responsive-grid-2 {
