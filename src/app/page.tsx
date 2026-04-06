@@ -348,7 +348,25 @@ function PhilosophySection() {
 /* ─── PROJECTS ────────────────────────────────────────────────────────── */
 const PROJECTS = [
   {
-    id: "seyon", youtubeId: "baG2LBG1M9I", title: "Seyon Short Film", cat: "Seyon Narrative", badge: "Short Film", img: "https://img.youtube.com/vi/baG2LBG1M9I/maxresdefault.jpg", desc: `Film Credits:
+    id: "chinese-bamboo",
+    youtubeId: "QgaPn7_t2DI",
+    title: "Chinese Bamboo | Documentary",
+    cat: "Documentary Production",
+    badge: "Documentary",
+    year: "2026",
+    img: "https://img.youtube.com/vi/QgaPn7_t2DI/maxresdefault.jpg",
+    desc: `சீன மூங்கில் | நடிப்புப் பாசறை ஆவணப்படம் | திரைப்பாசறை | அரங்காலயா | இளந்திரையன் | LIFT
+
+Director: Dilojan
+Producer: Kishanan
+Editor: JackiStar, Kishanan
+DOP: Sujan, Siyanth
+Sound Recordist: Kalaiyarasan
+
+This documentary showcases the acting workshop produced by Thiraippaasarai and Arangalaya.`
+  },
+  {
+    id: "seyon", youtubeId: "baG2LBG1M9I", title: "Seyon Short Film", cat: "Seyon Narrative", badge: "Short Film", year: "2024", img: "https://img.youtube.com/vi/baG2LBG1M9I/maxresdefault.jpg", desc: `Film Credits:
 Music : kalaiyarasan Erampanayakam
 Written & Directed by Dilojan
 Starring : Ratheeshan,Thanu,Lashakan,Vishnu,Akaash,A.J. Melistan,Piranavan,pirem,senthuran,
@@ -362,7 +380,7 @@ uduku by :mano
 
 Join this channel to get access to perks:
 https://www.youtube.com/channel/UC8fTp3LRm3CejEdCPosLoPA/join` }, {
-    id: "podcast", youtubeId: "tDV-N9grDqQ", title: "Brand Standards & Strategy | Sasi Balasingam", cat: "Creative Branding", badge: "Podcast",  img: "https://img.youtube.com/vi/tDV-N9grDqQ/maxresdefault.jpg", desc: `Suscribe For more podcast
+    id: "podcast", youtubeId: "tDV-N9grDqQ", title: "Brand Standards & Strategy | Sasi Balasingam", cat: "Creative Branding", badge: "Podcast", year: "2026",  img: "https://img.youtube.com/vi/tDV-N9grDqQ/maxresdefault.jpg", desc: `Suscribe For more podcast
 
 00:00 - Intro: Design Standards in Vavuniya (அறிமுகம்)
 01:27 - What Defines a Good Brand? (Brand இன் தரம் எதில் உள்ளது?)
